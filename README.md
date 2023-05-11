@@ -6,7 +6,14 @@ GP8XXX 系列在Arduino IDE 上的驱动库（目前已经兼容GP8101,GP8211S,G
 
 ## Product Link([www.dfrobot.com](www.dfrobot.com))
 
-    SKU:
+SUK：
+
+1. DFR1034 --- GP8503
+2. DFR1035 --- GP8512
+3. DFR1036 --- GP8101
+4. DFR1037 --- GP8501
+5. DFR1071 --- GP8211S
+6. DFR1071 --- GP8413
 
 ## Table of Contents
 
