@@ -109,7 +109,7 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
     if self._resolution == self.RESOLUTION_12_BIT:
       data = data << 4
     elif self._resolution == self.RESOLUTION_15_BIT:
-      data = data << 4
+      data = data << 1
     self._send_data(data, channel)
 
   def store(self):
@@ -274,10 +274,34 @@ class DFRobot_GP8211S(DFRobot_GP8XXX_IIC):
 class DFRobot_GP8512(DFRobot_GP8XXX_IIC):
   def __init__(self,i2c_sda,i2c_scl):
     return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_15_BIT)
+  def set_dac_out_voltage(self, data, channel=0):
+    '''!
+      @fn set_dac_out_voltage
+      @brief 设置不同通道输出DAC值
+      @param data 电压值对应的数据值
+      @param channel 输出通道
+      @n  0:通道0  (配置PWM0输出时有效)
+      @n  1:通道1  (配置PWM1输出时有效)
+      @n  2:全部通道 (配置双通道输出时有效)
+      @return NONE
+    '''
+    if data > self._resolution :
+      data = self._resolution
+    self._send_data(data, channel)
 
 class DFRobot_GP8413(DFRobot_GP8XXX_IIC):
   def __init__(self,i2c_sda,i2c_scl,i2c_addr=0x58):
     return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_15_BIT,device_addr=i2c_addr)
+
+class DFRobot_GP8403(DFRobot_GP8XXX_IIC):
+  def __init__(self,i2c_sda,i2c_scl,i2c_addr=0x58):
+    return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_12_BIT,device_addr=i2c_addr)
+
+class DFRobot_GP8302(DFRobot_GP8XXX_IIC):
+  def __init__(self,i2c_sda,i2c_scl,i2c_addr=0x58):
+    return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_12_BIT,device_addr=i2c_addr)
+  def set_dac_out_electric_current(self,data):
+    return self.set_dac_out_voltage(data)
 
 class DFRobot_GP8XXX_PWM(DFRobot_GP8XXX):
 

@@ -173,7 +173,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      */		
     uint8_t sendByte(uint8_t data, uint8_t ack = 0, uint8_t bits = 8, bool flag = true);
   
-  private:
+  protected:
   
     TwoWire *_pWire;
     int _scl= SCL;
@@ -198,6 +198,7 @@ class DFRobot_GP8512: public DFRobot_GP8XXX_IIC
 {
   public:
     DFRobot_GP8512(uint16_t resolution = RESOLUTION_15_BIT):DFRobot_GP8XXX_IIC(resolution){};
+    void setDACOutVoltage(uint16_t voltage, uint8_t channel=0);
 };
 
 class DFRobot_GP8413: public DFRobot_GP8XXX_IIC
@@ -205,6 +206,20 @@ class DFRobot_GP8413: public DFRobot_GP8XXX_IIC
   public:
     DFRobot_GP8413(uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_15_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr){};
 };
+
+class DFRobot_GP8302: public DFRobot_GP8XXX_IIC
+{
+  public:
+    DFRobot_GP8302(uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_12_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr){};
+    void setDACOutElectricCurrent(uint16_t current){setDACOutVoltage(current);};
+};
+
+class DFRobot_GP8403: public DFRobot_GP8XXX_IIC
+{
+  public:
+    DFRobot_GP8403(uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_12_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr){};
+};
+
 
 /**************************************************************************
                        PWM转2路0-2.5V/VCC 模拟电压模块(GP8501)
