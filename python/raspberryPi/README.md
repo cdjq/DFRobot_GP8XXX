@@ -43,7 +43,6 @@ There two methods:
  #################I2C系列#################
   def begin(self)
     '''!
-      @fn begin
       @brief 初始化函数
       @param 初始化函数
       @return 返回0表示成功，其他值表示失败 
@@ -51,7 +50,6 @@ There two methods:
 
   def set_dac_outrange(self, range)
     '''!
-      @fn set_dac_outrange
       @brief 设置DAC输出范围
       @param range DAC输出范围
       @n     eOutputRange0_5V(0-5V)
@@ -61,7 +59,6 @@ There two methods:
 
   def set_dac_out_voltage(self, data, channel=0)
     '''!
-      @fn set_dac_out_voltage
       @brief 设置不同通道输出DAC值
       @param data 电压值对应的数据值
       @param channel 输出通道
@@ -73,7 +70,6 @@ There two methods:
 
   def store(self)
     '''!
-      @fn store
       @brief 将设置的电压保存在芯片内部
       @return NONE
     '''
@@ -83,14 +79,12 @@ There two methods:
 
   def begin(self)
     '''!
-      @fn begin
       @brief 初始化函数
       @return 0
     '''
 
   def set_dac_out_voltage(self, data, channel=0)
     '''!
-      @fn set_dac_out_voltage
       @brief 设置不同通道输出DAC值
       @param data pwm 脉宽
       @param channel 输出通道

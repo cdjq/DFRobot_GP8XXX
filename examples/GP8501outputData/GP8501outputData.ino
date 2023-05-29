@@ -14,11 +14,11 @@
 
 //#define SINGLE_CHANNEL
 #ifdef SINGLE_CHANNEL 
-//单通道输出IO口
+//单通道输出，IO口配置
 int pwmPin0 = 9;
 DFRobot_GP8501 GP8501(pwmPin0);
 #else
-//双通道输出IO口
+//双通道输出，IO口配置
 int pwmPin0 = 9;
 int pwmPin1 = 10;
 DFRobot_GP8501 GP8501(pwmPin0,pwmPin1);

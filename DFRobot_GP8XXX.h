@@ -1,6 +1,6 @@
 /*!
   * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX 系列DAC驱动库（目前实现了GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512的驱动办法）
+  * @brief GP8XXX 系列DAC驱动库（目前实现了GP8101，GP8211S，GP8413，GP8501，GP8503，GP8512，GP8403，GP8302的驱动办法）
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -44,7 +44,6 @@ class DFRobot_GP8XXX
      * @brief 设置不同通道输出DAC值
      * @param data 需要输出的电压值
      * @param channel 输出通道 0:通道0;1:通道1;2:全部通道
-     * @param value DAC分辨率 4096 : 12bit ; 32767 : 15bit
      * @return NONE
      */
     virtual void setDACOutVoltage(uint16_t data, uint8_t channel) =0;   
@@ -72,8 +71,9 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 
     /**
      * @brief DFRobot_GP8XXX constructor
+     * @param resolution 分辨率
+     * @param deviceAddr I2C address
      * @param pWire I2C object
-     * @param addr I2C address
      */
     DFRobot_GP8XXX_IIC(uint16_t resolution,uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,TwoWire *pWire = &Wire)
     :_resolution(resolution),_deviceAddr(deviceAddr),_pWire(pWire){
@@ -174,12 +174,19 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
     uint8_t sendByte(uint8_t data, uint8_t ack = 0, uint8_t bits = 8, bool flag = true);
   
   protected:
-  
-    TwoWire *_pWire;
-    int _scl= SCL;
-    int _sda = SDA;
     uint16_t _resolution=0;
     uint8_t _deviceAddr;
+    TwoWire *_pWire;
+    #if (defined ARDUINO_BBC_MICROBIT_V2)
+      int _scl= 19;
+      int _sda = 20;
+    #else
+      int _scl= SCL;
+      int _sda = SDA;
+    #endif
+
+    
+    
 };
 
 class DFRobot_GP8503: public DFRobot_GP8XXX_IIC

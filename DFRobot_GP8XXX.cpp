@@ -1,6 +1,6 @@
 /*!
-  * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX 系列DAC驱动库（目前实现了GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512的驱动办法）
+  * @file DFRobot_GP8XXX.cpp
+  * @brief GP8XXX 系列DAC驱动库（目前实现了GP8101，GP8211S，GP8413，GP8501，GP8503，GP8512，GP8403，GP8302的驱动办法）
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -29,6 +29,8 @@ void DFRobot_GP8XXX_IIC::setDACOutRange(eOutPutRange_t range)
       data=0x11;
       writeRegister(GP8XXX_CONFIG_CURRENT_REG>>1,&data,1);
       break;
+    default:
+      break;
   }
 }
 
@@ -54,7 +56,7 @@ void DFRobot_GP8512::setDACOutVoltage(uint16_t voltage, uint8_t channel)
 
 void DFRobot_GP8XXX_IIC::sendData(uint16_t data, uint8_t channel)
 {
-  uint8_t buff[4]={ data & 0xff , data >> 8 , data & 0xff , data >> 8 };
+  uint8_t buff[4]={ uint8_t(data & 0xff) , uint8_t(data >> 8) , uint8_t(data & 0xff) , uint8_t(data >> 8)};
   if(channel == 0){
     writeRegister(GP8XXX_CONFIG_CURRENT_REG,(void *)buff,2);
   }else if(channel == 1){
