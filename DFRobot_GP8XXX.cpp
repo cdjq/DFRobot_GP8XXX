@@ -198,6 +198,9 @@ uint8_t DFRobot_GP8XXX_IIC::recvAck(uint8_t ack)
 
 int DFRobot_GP8XXX_PWM::begin()
 {
+  #if (defined ESP8266)
+    analogWriteRange(255);
+  #endif  
   if(_pin0 !=-1 ){
     pinMode(_pin0, OUTPUT);
     analogWrite(_pin0,0);
