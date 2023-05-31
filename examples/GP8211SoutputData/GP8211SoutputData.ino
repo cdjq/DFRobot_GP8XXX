@@ -21,7 +21,15 @@ void setup() {
     Serial.println("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确");
     delay(1000);
   }
-
+ 
+  /**
+   * @brief 设置DAC输出范围
+   * @param range DAC输出范围
+   * @n     eOutputRange5V(0-5V)
+   * @n     eOutputRange10V(0-10V)
+   */	
+  GP8211S.setDACOutRange(GP8211S.eOutputRange5V);
+ 
   /**
    * @brief 设置不同通道输出DAC值
    * @param data 电压值对应的数据值
