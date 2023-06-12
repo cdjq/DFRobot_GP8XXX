@@ -1,6 +1,6 @@
 '''!
   @file DFRobot_GP8XXX.py
-  @brief GP8XXX 系列DAC驱动库（目前实现了GP8101，GP8211S，GP8413，GP8501，GP8503，GP8512，GP8403，GP8302的驱动办法）
+  @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
   @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license     The MIT License (MIT)
   @author      [fary](feng.yang@dfrobot.com)
@@ -61,11 +61,11 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
  
   def __init__(self,sda,scl,resolution,device_addr=GP8XXX_I2C_DEVICE_ADDR):
     '''!
-      @brief i2c类初始化
-      @param sda i2c数据引脚
-      @param scl i2c时钟引脚
-      @param resolution 分辨率
-      @param device_addr i2c设备地址 
+      @brief I2C class initialization
+      @param SDA I2C data pin
+      @param SCL I2C clock pin
+      @param Resolution resolution
+      @param device_addr the I2C device address 
     '''
     self._resolution = resolution
     self._device_addr = device_addr
@@ -74,11 +74,11 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def begin(self):
     '''!
-      @brief 初始化函数
-      @return 返回0表示成功，其他值表示失败 
+      @brief Initialize the function
+      @return returns 0 for success, and other values for failure 
     '''
-    GPIO.setwarnings(False)  # 屏蔽警告
-    GPIO.setmode(GPIO.BCM)  # 设置引脚模式BCM
+    GPIO.setwarnings(False) # masks warnings
+    GPIO.setmode(GPIO.BCM) # Set the pin mode BCM
     GPIO.setup(self._scl, GPIO.OUT)
     GPIO.setup(self._sda, GPIO.OUT)
     self._start_signal()
@@ -88,8 +88,8 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def set_dac_outrange(self, range):
     '''!
-      @brief 设置DAC输出范围
-      @param range DAC输出范围
+      @brief Set the DAC output range
+      @param range DAC output range
       @n     eOutputRange0_5V(0-5V)
       @n     eOutputRange0_10V(0-10V)
       @return NONE
@@ -103,12 +103,12 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def set_dac_out_voltage(self, data, channel=0):
     '''!
-      @brief 设置不同通道输出DAC值
-      @param data 电压值对应的数据值
-      @param channel 输出通道
-      @n  0:通道0  (配置PWM0输出时有效)
-      @n  1:通道1  (配置PWM1输出时有效)
-      @n  2:全部通道 (配置双通道输出时有效)
+      @brief Set different channel output DAC values
+      @param data value corresponding to the data voltage value
+      @param channel output channel
+      @n 0: Channel 0 (valid when PWM0 output is configured)
+      @n 1: Channel 1 (effective when PWM1 output is configured)
+      @n 2: All channels (valid when configuring dual channel outputs)
       @return NONE
     '''
     if data > self._resolution :
@@ -121,7 +121,7 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def store(self):
     '''!
-      @brief 将设置的电压保存在芯片内部
+      @brief Save the set voltage inside the chip
       @return NONE
     '''
     self._start_signal()
@@ -156,12 +156,12 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _send_data(self, data, channel):
     '''!
-      @brief 设置IIC输入值
-      @param data 需要设置的输入值(0-fff)
-      @param channel 输出通道
-      @n  0:通道0  (配置PWM0输出时有效)
-      @n  1:通道1  (配置PWM1输出时有效)
-      @n  2:全部通道 (配置双通道输出时有效)
+      @brief Set the IIC input value
+      @param data input value to be set (0-fff)
+      @param channel output channel
+      @n 0: Channel 0 (valid when PWM0 output is configured)
+      @n 1: Channel 1 (effective when PWM1 output is configured)
+      @n 2: All channels (valid when configuring dual channel outputs)
       @return NONE
     '''
     buf = [data & 0xff,(data >> 8 ) & 0xff ,data & 0xff,(data >> 8 ) & 0xff]
@@ -174,10 +174,10 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _write_reg(self, reg, data,size):
     '''!
-      @brief 向设备寄存器中写入值
-      @param reg 寄存器地址
-      @param data 要写入的数据
-      @param size 数据长度
+      @brief writes a value to the device register
+      @param reg register address
+      @param data The data to be written
+      @param size data length
     '''
     self._start_signal()
     self._send_byte(self._device_addr << 1, 1)
@@ -188,7 +188,7 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _start_signal(self):
     '''!
-      @brief i2c起始信号
+      @brief I2C start signal
     '''
     GPIO.output(self._scl, GPIO.HIGH)
     GPIO.output(self._sda, GPIO.HIGH)
@@ -200,7 +200,7 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _stop_signal(self):
     '''!
-      @brief i2c停止信号
+      @brief I2C stop signal
     '''
     GPIO.output(self._sda, GPIO.LOW)
     time.sleep(self.I2C_CYCLE_BEFORE)
@@ -211,9 +211,9 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _recv_ack(self, ack=0):
     '''!
-      @brief 接收应答
-      @param ack  要接收的应答信号
-      @return 应答信号
+      @brief Receive an answer
+      @param acknowledgment signal to be received by ack
+      @return Acknowledgment signal
     '''
     ack_ = 0
     error_time = 0
@@ -235,12 +235,12 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
 
   def _send_byte(self, data, ack=0, bits=8, flag=True):
     '''!
-      @brief 软件i2c发送数据
-      @param data 要发送的数据
-      @param ack 应答信号
-      @param bits 发送多少位
-      @param flag 是否接收应答
-      @return 应答信号
+      @brief Software I2C sends data
+      @param data The data to send
+      @param ACK acknowledgement signal
+      @param how many bits to send
+      @param whether the flag receives a reply
+      @return Acknowledgment signal
     '''
     i = bits
     data = data & 0xFF
@@ -276,12 +276,12 @@ class DFRobot_GP8512(DFRobot_GP8XXX_IIC):
     return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_15_BIT)
   def set_dac_out_voltage(self, data, channel=0):
     '''!
-      @brief 设置不同通道输出DAC值
-      @param data 电压值对应的数据值
-      @param channel 输出通道
-      @n  0:通道0  (配置PWM0输出时有效)
-      @n  1:通道1  (配置PWM1输出时有效)
-      @n  2:全部通道 (配置双通道输出时有效)
+      @brief Set different channel output DAC values
+      @param data value corresponding to the data voltage value
+      @param channel output channel
+      @n 0: Channel 0 (valid when PWM0 output is configured)
+      @n 1: Channel 1 (effective when PWM1 output is configured)
+      @n 2: All channels (valid when configuring dual channel outputs)
       @return NONE
     '''
     if data > self._resolution :
@@ -306,37 +306,37 @@ class DFRobot_GP8XXX_PWM(DFRobot_GP8XXX):
 
   def __init__(self,pin0=-1,pin1=-1):
     '''!
-      @brief pwm类初始化
-      @param pin0 pwm 0号通道对应的引脚 
-      @param pin1 pwm 1号通道对应的引脚 
+      @brief PWM class initialization
+      @param pin 0 PWM channel 0 corresponds to the pin 
+      @param pin corresponding to pin1 PWM channel 1 
     '''
     self._pin0 = pin0
     self._pin1 = pin1
 
   def begin(self):
     '''!
-      @brief 初始化函数
+      @brief Initialize the function
       @return 0
     '''
-    GPIO.setwarnings(False)  # 屏蔽警告
-    GPIO.setmode(GPIO.BCM)  # 设置引脚模式BCM
+    GPIO.setwarnings(False)  # Block warnings
+    GPIO.setmode(GPIO.BCM)   # Set the pin mode BCM
     if self._pin0 != -1 :
-      GPIO.setup(self._pin0, GPIO.OUT)  # 设置引脚R0方向输出
+      GPIO.setup(self._pin0, GPIO.OUT)  # Set pin R0 direction output
       self._PWM0 = GPIO.PWM(self._pin0, 100)
       self._PWM0.start(0)
     if self._pin1 != -1 :
-      GPIO.setup(self._pin1, GPIO.OUT)  # 设置引脚R1方向输出
+      GPIO.setup(self._pin1, GPIO.OUT)  # Set pin R1 direction output
       self._PWM1 = GPIO.PWM(self._pin1,100)
       self._PWM1.start(0)
 
   def set_dac_out_voltage(self, data, channel=0):
     '''!
-      @brief 设置不同通道输出DAC值
-      @param data pwm 脉宽
-      @param channel 输出通道
-      @n  0:通道0  (配置PWM0输出时有效)
-      @n  1:通道1  (配置PWM1输出时有效)
-      @n  2:全部通道 (配置双通道输出时有效)
+      @brief Set different channel output DAC values
+      @param data pwm pulse width
+      @param channel output channel
+      @n 0: Channel 0 (valid when PWM0 output is configured)
+      @n 1: Channel 1 (effective when PWM1 output is configured)
+      @n 2: All channels (valid when configuring dual channel outputs)
       @return NONE
     '''
     if data > 100:

@@ -1,6 +1,6 @@
 /*!
   * @file GP8211SoutputData.ino
-  * @brief 设置输出通道、电压值，将I2C信号转换为1路0-10V的模拟电压信号。
+  * @brief To convert the I2C signal into a single-channel analog voltage signal of (0-5V) or (0-10V), you need to set the output channel and voltage value.
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -23,23 +23,23 @@ void setup() {
   }
  
   /**
-   * @brief 设置DAC输出范围
-   * @param range DAC输出范围
+   * @brief Set the DAC output range.
+   * @param range DAC output range.
    * @n     eOutputRange5V(0-5V)
    * @n     eOutputRange10V(0-10V)
    */	
   GP8211S.setDACOutRange(GP8211S.eOutputRange5V);
  
   /**
-   * @brief 设置不同通道输出DAC值
-   * @param data 电压值对应的数据值
-   * @n （0 - 32767）本模块是15位精度的DAC模块，所以（0 - 32767）分别对应着（0-10V）
+   * @brief Set the channel output DAC value.
+   * @param data Data values corresponding to voltage levels.
+   * @n In this module, with a 15-bit precision DAC, the data values ranging from 0 to 32767 correspond to voltage ranges of 0-5V or 0-10V, respectively.
    */   
   GP8211S.setDACOutVoltage(32767);
 
   delay(1000);
 
-  //将设置的电压保存在芯片内部,掉电保存
+  //Save the set voltage in the chip's internal memory for power loss recovery.
   //GP8211S.store();
 }
 

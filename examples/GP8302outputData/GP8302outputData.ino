@@ -1,6 +1,6 @@
 /*!
   * @file GP8302outputData.ino
-  * @brief 设置输出电流值，将I2C信号转换为1路2-25mA模拟电流输出。
+  * @brief  Set the output current value and convert the I2C signal into a single-channel analog current output ranging from 2-25mA.
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -18,20 +18,20 @@ void setup() {
   Serial.begin(9600);
 
   while(GP8302.begin()!=0){
-    Serial.println("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确");
+    Serial.println("Communication with the device failed. Please check if the connection is correct or if the device address is set correctly.");
     delay(1000);
   }
 
   /**
-   * @brief 设置不同通道输出DAC值
-   * @param data 电压值对应的数据值
-   * @n （0 - 4095）本模块是12位精度的DAC模块，所以（0 - 4095）分别对应着(0-25mA)
+   * @brief Set the channel output DAC value.
+   * @param data Data values corresponding to voltage levels.
+   * @n With this 12-bit precision DAC module, the data values ranging from 0 to 4095 correspond to current ranges of 0-25mA.
    */   
   GP8302.setDACOutElectricCurrent(2048);
 
   delay(1000);
   
-  //将设置的电压保存在芯片内部,掉电保存
+  //Save the set voltage in the chip's internal memory for power loss recovery.
   //GP8302.store();
 }
 

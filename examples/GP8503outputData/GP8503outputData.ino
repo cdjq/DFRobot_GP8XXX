@@ -1,6 +1,6 @@
 /*!
   * @file GP8503outputData.ino
-  * @brief 设置输出通道、电压值，将I2C信号转换为2路0-2.5V或0-VCC(2.7V-5.5V)的模拟电压信号。
+  * @brief Set the output channels and voltage values to convert the I2C signal into two channels of analog voltage signals ranging from 0-2.5V or 0-VCC (2.7V-5.5V).
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -18,24 +18,24 @@ void setup() {
   Serial.begin(9600);
 
   while(GP8503.begin()!=0){
-    Serial.println("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确");
+    Serial.println("Communication with the device failed. Please check if the connection is correct or if the device address is set correctly.");
     delay(1000);
   }
 
   /**
-   * @brief 设置不同通道输出DAC值
-   * @param data 电压值对应的数据值
-   * @n （0 - 4095）本模块是12位精度的DAC模块，所以（0 - 4095）分别对应着(0-2.5V)或（0-VCC）,具体对应的电压范围根据模块电压选择波动开关而定
-   * @param channel 输出通道
-   * @n  0:通道0
-   * @n  1:通道1
-   * @n  2:全部通道
-   */   
+   * @brief Set different channel outputs for the DAC values
+   * @param data Data values corresponding to voltage levels
+   * @n With a 12-bit precision DAC module, the data values ranging from 0 to 4095 correspond to voltage ranges of 0-2.5V or 0-VCC, respectively. The specific voltage range depends on the module's voltage selection switch.
+   * @param channel Output channel
+   * @n 0: Channel 0
+   * @n 1: Channel 1
+   * @n 2: All channels
+   */
   GP8503.setDACOutVoltage(4095,2);
 
   delay(1000);
   
-  //将设置的电压保存在芯片内部,掉电保存
+  //Save the set voltage in the chip's internal memory for power loss recovery.
   //GP8503.store();
 }
 

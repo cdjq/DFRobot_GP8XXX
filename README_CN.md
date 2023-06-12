@@ -1,7 +1,7 @@
 # DFRobot_GP8XXX
 * [English Version](./README.md)
 
-GP8XXX 系列在Arduino IDE 上的驱动库（目前已经兼容GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512）
+GP8XXX 系列在Arduino IDE 上的驱动库（目前已经兼容GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512,GP8403,GP8302）
 
 ## 产品链接([www.dfrobot.com](www.dfrobot.com))
 

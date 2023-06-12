@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 '''!
   @file  gp8503_output_data.py
-  @brief 设置输出通道、电压值=，将I2C信号转换为2路0-2.5V或0-VCC(2.7V-5.5V)的模拟电压信号。
+  @brief 设置输出通道电压值=，将I2C信号转换为2路0-2.5V或0-VCC(2.7V-5.5V)的模拟电压信号。
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [fary](feng.yang@dfrobot.com)
@@ -17,28 +17,28 @@ import time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_GP8XXX import *
-# 本示例采用软件I2C驱动，不建议传入硬件I2C对应的引脚接口，传入引脚号采用的是BCM编码
+# This example uses software I2C driver. It is not recommended to pass the hardware I2C pin interface. The pin number passed should use the BCM coding.
 DAC = DFRobot_GP8503(i2c_sda=17,i2c_scl=27)
 
 def setup():
 
   while DAC.begin()!=0:
-    print("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确")
+    print("Communication with the device failed. Please check if the connection is correct and ensure that the device address is set correctly.")
     time.sleep(1)
 
   '''!
-    @brief 设置不同通道输出DAC值
-    @param data 电压值对应的数据值
-    @n （0 - 4095）本模块是12位精度的DAC模块，所以（0 - 4095）分别对应着(0-2.5V)或（0-VCC）,具体对应的电压范围根据模块电压选择波动开关而定
-    @param channel 输出通道
-    @n  0:通道0
-    @n  1:通道1
-    @n  2:全部通道
+    @brief Set different channel output DAC values
+    @param data value corresponding to the data voltage value
+    @n (0 - 4095) This module is a DAC module with 12-bit accuracy, so (0 - 4095) corresponds to (0-2.5V) or (0-VCC), respectively, and the specific corresponding voltage range depends on the module voltage selection wave switch
+    @param channel output channel
+    @n 0: Channel 0
+    @n 1: Channel 1
+    @n 2: All channels
   '''
   DAC.set_dac_out_voltage(4095, 2)
 
-  #将设置的电压保存在芯片内部,掉电保存
-  #DAC.store()
+  # Save the set voltage in the chip's internal memory for power-off retention.
+  # DAC.store()
 
 def loop():
   pass

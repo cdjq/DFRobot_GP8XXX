@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 '''!
   @file  gp8211s_output_data.py
-  @brief 设置输出电压对应的数据值，，将I2C信号转换为1路0-10V的模拟电压信号。
+  @brief Set the data values corresponding to the output voltage and convert the I2C signal into a single-channel analog voltage signal ranging from 0-10V.
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [fary](feng.yang@dfrobot.com)
@@ -17,24 +17,33 @@ import time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_GP8XXX import *
-# 本示例采用软件I2C驱动，不建议传入硬件I2C对应的引脚接口，传入引脚号采用的是BCM编码
+# This example uses software I2C driver and it is not recommended to pass the hardware I2C pin interfaces. Instead, the pin numbers should be passed in BCM encoding.
 DAC = DFRobot_GP8503(i2c_sda=17,i2c_scl=27)
 
 def setup():
   
   while DAC.begin()!=0:
-    print("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确")
+    print("Communication with the device failed. Please check if the connection is correct and ensure that the device address is set correctly.")
     time.sleep(1)
 
-  '''!
-    @brief 设置不同通道输出DAC值
-    @param data 电压值对应的数据值
-    @n （0 - 32767）本模块是15位精度的DAC模块，所以（0 - 32767）分别对应着（0-10V）
+
+  '''
+    @brief Set the DAC output range
+    @param mode DAC output range
+    @n     OUTPUT_RANGE_5V (0-5V)
+    @n     OUTPUT_RANGE_10V (0-10V)
+  '''
+  DAC.set_dac_outrange(DAC.OUTPUT_RANGE_10V)
+
+  '''
+    @brief Set channel output DAC values
+    @param data Data value corresponding to the voltage
+    @n (0 - 32767) This module is a 15-bit precision DAC module, so (0 - 32767) corresponds to (0-10V)
   '''
   DAC.set_dac_out_voltage(32767)
 
-  #将设置的电压保存在芯片内部,掉电保存
-  #DAC.store()
+  # Save the set voltage in the chip's internal memory for power-off retention.
+  # DAC.store()
 
 def loop():
   pass

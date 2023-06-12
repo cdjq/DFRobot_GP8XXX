@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 '''!
   @file  gp8501_output_data.py
-  @brief 设置输出通道、电压值，将PWM信号转换为2路0-2.5V或0-VCC(2.7V-5.5V)的模拟电压信号
+  @brief Set the output channel and voltage value, and convert the PWM signal to two 0-2.5V or 0-VCC (2.7V-5.5V) analog voltage signals
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [fary](feng.yang@dfrobot.com)
@@ -17,7 +17,7 @@ import time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_GP8XXX import *
-#传入引脚号采用的是BCM编码
+#The incoming pin number is BCM coded
 DAC = DFRobot_GP8501(pin0=17,pin1=18)
 
 def setup():
@@ -25,10 +25,13 @@ def setup():
   DAC.begin()
 
   '''!
-    @brief 设置不同通道输出DAC值
-    @param data pwm 占空比 （0-100）
-    @n 可选参数（0-100）对应（0-2.5V）或者（0-VCC）,具体对应的电压范围根据模块电压选择波动开关而定
-    @param channel 输出通道 0:通道0;1:通道1;2:全部通道
+    @brief Set different channel outputs for the DAC values
+    @param data PWM Duty  (0-100)
+    @n  The optional parameters (0-100) correspond to (0-2.5V) or (0-VCC), and the specific corresponding voltage range depends on the module voltage selection wave switch
+    @param channel Output channel
+    @n 0: Channel 0 (valid when configuring PWM0 output)
+    @n 1: Channel 1 (valid when configuring PWM1 output)
+    @n 2: All channels (valid when configuring dual-channel output)
   '''
   DAC.set_dac_out_voltage(100, 2)
 

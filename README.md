@@ -2,7 +2,7 @@
 
 * [中文版](./README_CN.md)
 
-GP8XXX 系列在Arduino IDE 上的驱动库（目前已经兼容GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512，GP8403，GP8302）
+GP8XXX series driver libraries on the Arduino IDE (currently compatible with GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302)
 
 ## Product Link([www.dfrobot.com](www.dfrobot.com))
 
@@ -27,9 +27,7 @@ SUK：
   - [Credits](#credits)
 
 ## Summary
-
-  此库已经争对目前兼容的6款产品分别提供了示例demo,用户可以根据名称进行对应使用
-
+    This library has already provided sample demos for each of the 8 currently compatible products, and users can use them according to their names
 ## Installation
 
 There two methods: 
@@ -44,21 +42,21 @@ There two methods:
                                   PWM 系列
  **************************************************************************/
 
-	/**
+	  /**
      * @fn begin
-     * @brief 初始化函数
+     * @brief Initialize the function
      * @return 0
      */
     int begin();
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data pwm 脉宽
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set different channel output DAC values
+     * @param data PWM pulse width
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
@@ -68,36 +66,36 @@ There two methods:
  **************************************************************************/
     /**
      * @fn begin
-     * @brief 初始化函数
-     * @return 返回0表示成功，其他值表示失败 
+     * @brief initialization function
+     * @return returns 0 for success, and other values for failure 
      */
     int begin(void);
 
     /**
      * @fn setDACOutRange
-     * @brief 设置DAC输出范围
-     * @param range DAC输出范围
+     * @brief Set the DAC output range
+     * @param range DAC output range
      * @n     eOutputRange0_5V(0-5V)
      * @n     eOutputRange0_10V(0-10V)
      * @return NONE
-     */	
+     */
     void setDACOutRange(eOutPutRange_t range);
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data 电压值对应的数据值
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set different channel output DAC values
+     * @param data value corresponding to the voltage value
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
 	
     /**
      * @fn store
-     * @brief 将设置的电压保存在芯片内部
+     * @brief Save the set voltage inside the chip
      * @return NONE
      */
     void store(void);

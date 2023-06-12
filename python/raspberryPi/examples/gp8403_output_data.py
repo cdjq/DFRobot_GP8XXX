@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 '''!
   @file  gp8403_output_data.py
-  @brief 设置输出通道、电压值和范围，将I2C信号转换为2路0-5V或0-10V的模拟电压信号。
+  @brief Set output channels, voltage values, and ranges to convert I2C signals into 2-channel analog voltage signals (0-5V or 0-10V).
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [fary](feng.yang@dfrobot.com)
@@ -39,36 +39,36 @@ from DFRobot_GP8XXX import *
 | 1  |  1  | 1  |   0x5F   |
 ----------------------------
 '''
-# 本示例采用软件I2C驱动，不建议传入硬件I2C对应的引脚接口，传入引脚号采用的是BCM编码
+# This example uses software I2C driver. It is not recommended to pass in hardware I2C pin interfaces. The pin numbers should be provided in BCM encoding.
 DAC = DFRobot_GP8403(i2c_sda=17,i2c_scl=27,i2c_addr=0x58)
 
 def setup():
 
   while DAC.begin()!=0:
-    print("与设备通信失败，请检查连接是否正常或者设备地址是否设置正确")
+    print("Communication with the device failed. Please check if the connection is correct and ensure that the device address is set correctly.")
     time.sleep(1)
 
-  '''!
-    @brief 设置DAC输出范围
-    @param mode DAC输出范围
+  '''
+    @brief Set DAC output range
+    @param mode DAC output range
     @n     OUTPUT_RANGE_5V(0-5V)
     @n     OUTPUT_RANGE_10V(0-10V)
   '''
   DAC.set_dac_outrange(DAC.OUTPUT_RANGE_10V)
 
-  '''!
-    @brief 设置不同通道输出DAC值
-    @param data 电压值对应的数据值
-    @n （0 - 4095）本模块是15位精度的DAC模块，所以（0 - 4095）分别对应着(0-5V)或（0-10V）,具体对应的电压范围根据模块电压选择波动开关而定
-    @param channel 输出通道
-    @n  0:通道0
-    @n  1:通道1
-    @n  2:全部通道
+  '''
+    @brief Set different channel output DAC values
+    @param data The data value corresponding to the voltage
+    @n (0 - 4095) This module is a 15-bit precision DAC module, so (0 - 4095) corresponds to (0-5V) or (0-10V), and the specific voltage range depends on the fluctuation switch selected according to the module voltage
+    @param channel Output channel
+    @n 0: Channel 0
+    @n 1: Channel 1
+    @n 2: All channels
   '''
   DAC.set_dac_out_voltage(4095, 2)
 
-  #将设置的电压保存在芯片内部,掉电保存
-  #DAC.store()
+  # Save the set voltage in the chip's internal memory for power-off retention.
+  # DAC.store()
 
 def loop():
   pass

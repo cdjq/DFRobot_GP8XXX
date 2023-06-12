@@ -1,6 +1,6 @@
 /*!
   * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX 系列DAC驱动库（目前实现了GP8101，GP8211S，GP8413，GP8501，GP8503，GP8512，GP8403，GP8302的驱动办法）
+  * @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -35,15 +35,15 @@ class DFRobot_GP8XXX
 
     /**
      * @fn begin
-     * @brief 初始化函数
+     * @brief initialization function
      */
     virtual int begin(void) =0;
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data 需要输出的电压值
-     * @param channel 输出通道 0:通道0;1:通道1;2:全部通道
+     * @brief Set different channel output DAC values
+     * @param data requires the output voltage value
+     * @param channel output channel 0: channel 0; 1: Channel 1; 2: All channels
      * @return NONE
      */
     virtual void setDACOutVoltage(uint16_t data, uint8_t channel) =0;   
@@ -71,7 +71,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 
     /**
      * @brief DFRobot_GP8XXX constructor
-     * @param resolution 分辨率
+     * @param resolution resolution
      * @param deviceAddr I2C address
      * @param pWire I2C object
      */
@@ -82,36 +82,36 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 
     /**
      * @fn begin
-     * @brief 初始化函数
-     * @return 返回0表示成功，其他值表示失败 
+     * @brief initialization function
+     * @return returns 0 for success, and other values for failure 
      */
     int begin(void);
 
     /**
      * @fn setDACOutRange
-     * @brief 设置DAC输出范围
-     * @param range DAC输出范围
+     * @brief Set the DAC output range
+     * @param range DAC output range
      * @n     eOutputRange0_5V(0-5V)
      * @n     eOutputRange0_10V(0-10V)
      * @return NONE
-     */	
+     */
     void setDACOutRange(eOutPutRange_t range);
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data 电压值对应的数据值
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set different channel output DAC values
+     * @param data value corresponding to the voltage value
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
 	
     /**
      * @fn store
-     * @brief 将设置的电压保存在芯片内部
+     * @brief Save the set voltage inside the chip
      * @return NONE
      */
     void store(void);
@@ -120,12 +120,12 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
   protected:
 	  /**
      * @fn sendData
-     * @brief 设置IIC输入值
-     * @param data 需要设置的输入值(0-fff)
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set the IIC input value
+     * @param data input value to be set (0-fff)
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
 	  void sendData(uint16_t data, uint8_t channel);
@@ -144,33 +144,33 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 
     /**
      * @fn startSignal
-     * @brief i2c起始信号
+     * @brief I2C start signal
      */
     void startSignal(void);
 
     /**
-     * @fn startSignal
-     * @brief i2c停止信号
+     * @fn stopSignal
+     * @brief I2C stop signal
      */	
     void stopSignal(void);
 
     /**
      * @fn recvAck
-     * @brief 接收应答
-     * @param ack  要接收的应答信号
-     * @return 应答信号
+     * @brief Receive a reply
+     * @param ack signal to be received by ack
+     * @return Answer signal
      */	
     uint8_t recvAck(uint8_t ack);
 
     /**
      * @fn sendByte
-     * @brief 软件i2c发送数据
-     * @param data 要发送的数据
-     * @param ack 应答信号
-     * @param bits 发送多少位
-     * @param flag 是否接收应答
-     * @return 应答信号
-     */		
+     * @brief Software I2C sends data
+     * @param data The data to be sent
+     * @param ack acknowledgement signal
+     * @param bits How many bits are sent
+     * @param flag whether the flag receives a reply
+     * @return Answer signal
+     */
     uint8_t sendByte(uint8_t data, uint8_t ack = 0, uint8_t bits = 8, bool flag = true);
   
   protected:
@@ -229,7 +229,7 @@ class DFRobot_GP8403: public DFRobot_GP8XXX_IIC
 
 
 /**************************************************************************
-                       PWM转2路0-2.5V/VCC 模拟电压模块(GP8501)
+                       PWM to 2 analog voltage modules
  **************************************************************************/
 class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
 {
@@ -238,21 +238,21 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
     :_pin0(pin0),_pin1(pin1){
 
     }
-	/**
+	  /**
      * @fn begin
-     * @brief 初始化函数
+     * @brief Initialize the function
      * @return 0
      */
     int begin();
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data pwm 脉宽
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set different channel output DAC values
+     * @param data PWM pulse width
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
@@ -260,12 +260,12 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
   private:	
 	/**
      * @fn sendData
-     * @brief 设置PWM占空比
-     * @param data pwm 脉宽
-     * @param channel 输出通道
-     * @n  0:通道0  (配置PWM0输出时有效)
-     * @n  1:通道1  (配置PWM1输出时有效)
-     * @n  2:全部通道 (配置双通道输出时有效)
+     * @brief Set PWM duty cycle
+     * @param data PWM pulse width
+     * @param channel output channel
+     * @n 0: Channel 0 (valid when PWM0 output is configured)
+     * @n 1: Channel 1 (valid when PWM1 output is configured)
+     * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
 	void sendData(uint8_t data, uint8_t channel);
