@@ -1,6 +1,6 @@
 /*!
   * @file DFRobot_GP8XXX.cpp
-  * @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
+  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -43,6 +43,8 @@ void DFRobot_GP8XXX_IIC::setDACOutVoltage(uint16_t voltage, uint8_t channel)
     voltage = voltage << 4;
   }else if(_resolution == RESOLUTION_15_BIT) {
     voltage = voltage << 1;
+  }else if(_resolution == RESOLUTION_16_BIT) {
+    voltage = voltage ;
   }
   sendData(voltage, channel);
 }
@@ -194,6 +196,59 @@ uint8_t DFRobot_GP8XXX_IIC::recvAck(uint8_t ack)
   return ack_;
 }
 
+void DFRobot_GP8600_I2C::setDACOutRange(eOutPutRange_t range)
+{
+  uint8_t data = 0;
+  switch(range){
+    case DFRobot_GP8600_I2C::eOutputRange5V:
+      data = GP8600_0_5V_MODE;
+      break;
+    case DFRobot_GP8600_I2C::eOutputRange6V:
+      data = GP8600_0_6V_MODE;
+      break;
+    case DFRobot_GP8600_I2C::eOutputRange10V:
+      data = GP8600_0_10V_MODE;
+      break;
+    case DFRobot_GP8600_I2C::eOutputRange12V:
+      data = GP8600_0_12V_MODE;
+      break;
+    case DFRobot_GP8600_I2C::eOutputRange20MA:
+      data = GP8600_0_20MA_MODE;
+      break;
+    default:
+      break;
+  }
+  writeRegister(GP8XXX_MODEL_ADDR,&data,1);
+}
+
+
+void DFRobot_GP8630N_I2C::setDACOutRange(eOutPutRange_t range)
+{
+  uint8_t data = 0;
+  switch(range){
+    case DFRobot_GP8630N_I2C::eOutputRange10V:
+      data = GP8630N_0_10V_MODE;
+      break;
+    case DFRobot_GP8630N_I2C::eOutputRange12V:
+      data = GP8630N_0_12V_MODE;
+      break;
+    case DFRobot_GP8630N_I2C::eOutputRange_10V:
+      data = GP8630N_10_0V_MODE;
+      break;
+    case DFRobot_GP8630N_I2C::eOutputRange_12V:
+      data = GP8630N_12_0V_MODE;
+      break;
+    case DFRobot_GP8630N_I2C::eOutputRange20MA:
+      data = GP8630N_0_20MA_MODE;
+      break;
+    case DFRobot_GP8630N_I2C::eOutputRange24MA:
+      data = GP8630N_0_24MA_MODE;
+      break;
+    default:
+      break;
+  }
+  writeRegister(GP8XXX_MODEL_ADDR,&data,1);
+}
 
 
 int DFRobot_GP8XXX_PWM::begin()
@@ -228,4 +283,32 @@ void DFRobot_GP8XXX_PWM::sendData(uint8_t data, uint8_t channel)
       analogWrite(_pin0, (uint8_t)data);
 	    analogWrite(_pin1, (uint8_t)data);
     }
+}
+
+
+
+int DFRobot_GP8XXX_PWM_SINGLE::begin()
+{
+
+  if(_pin0 !=-1 ){
+    pinMode(_pin0, OUTPUT);
+    analogWrite(_pin0,0);
+  }
+  #if defined(ESP32) 
+    analogWriteResolution(_pin0,10);  
+  #elif  defined(ESP8266)
+    analogWriteResolution(10);  
+  #endif
+
+  return 0;
+}
+
+void DFRobot_GP8XXX_PWM_SINGLE::setDACOutData(uint16_t data)
+{ 
+  #if !defined(ESP32) && !defined(ESP8266)
+    data =  data < 255 ? data : 255 ;
+  #else
+    data =  data < 1023 ? data : 1023 ;
+  #endif
+  analogWrite(_pin0, data);
 }

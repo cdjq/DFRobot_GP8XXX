@@ -1,7 +1,7 @@
 # DFRobot_GP8XXX
 * [English Version](./README.md)
 
-GP8XXX 系列在树莓派上的驱动库（目前已经兼容GP8101,GP8211S,GP8413,GP8501，GP8503，GP8512，GP9403，GP8302）
+GP8XXX 系列在树莓派上的驱动库（目前已经兼容GP8101，GP8101S，GP8211S，GP8413，GP8501，GP8503，GP8512，GP9403，GP8302, GP8600, GP8630N, GP210）
 
 ## 产品链接([www.dfrobot.com](www.dfrobot.com))
 
@@ -9,12 +9,15 @@ SUK：
 
 1. DFR1034 --- GP8503
 2. DFR1035 --- GP8512
-3. DFR1036 --- GP8101
+3. DFR1036 --- GP8101S
 4. DFR1037 --- GP8501
 5. DFR1071 --- GP8211S
 6. DFR1073 --- GP8413
 7. DFR0971 --- GP8403
 8. DFR0972 --- GP8302
+9. DFR1228 --- GP210
+10. DFR1229 --- GP8600
+11. DFR1230 --- GP8630N
 
 ## 目录
 
@@ -27,7 +30,7 @@ SUK：
 
 ## 概述
 
-  此库已经争对目前兼容的6款产品分别提供了示例demo,用户可以根据名称进行对应使用
+  此库已经对目前兼容的11款产品分别提供了示例demo,用户可以根据名称进行对应使用
 
 ## 库安装
 
@@ -52,8 +55,14 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
     '''!
       @brief 设置DAC输出范围
       @param range DAC输出范围
-      @n     eOutputRange0_5V(0-5V)
-      @n     eOutputRange0_10V(0-10V)
+      @n     OUTPUT_RANGE_5V(0-5V)
+      @n     OUTPUT_RANGE_6V(0-6V)
+      @n     OUTPUT_RANGE_10V(0-10V)
+      @n     OUTPUT_RANGE_12V(0-12V)
+      @n     OUTPUT_RANGE_10_0V(-10-0V)
+      @n     OUTPUT_RANGE_12_0V(-12-0V)
+      @n     OUTPUT_RANGE_20MA(0-20mA)
+      @n     OUTPUT_RANGE_24MA(0-24mA)
       @return NONE
     '''
 
@@ -115,8 +124,10 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
 ## 历史
 
 - 2023/5/10 - 1.0.0 版本
+- 2025/7/4  - 1.1.0 版本 适配GP8600, GP8630N, GP210
 
 ## 创作者
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))
+- Written by lr  ( rong.li@dfrobot.com),   2025. (Welcome to our [website](https://www.dfrobot.com/))
 

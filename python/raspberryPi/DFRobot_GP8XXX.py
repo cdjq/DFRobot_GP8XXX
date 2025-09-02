@@ -28,6 +28,7 @@ class DFRobot_GP8XXX(ABC):
   OUTPUT_RANGE_VCC = 3
   RESOLUTION_12_BIT =0x0FFF
   RESOLUTION_15_BIT =0x7FFF
+  RESOLUTION_16_BIT =0xFFFF
   def __init__(self):
     '''!
       @brief Module init
@@ -40,6 +41,12 @@ class DFRobot_GP8XXX(ABC):
     pass
 
 class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
+  ## Device model identification register address
+  GP8XXX_MODEL_ADDR  =  0x01        
+  ## Low byte data configuration register address
+  GP8XXX_LDATA_ADDR  =  0x02        
+  ## High byte data configuration register address
+  GP8XXX_HDATA_ADDR  =  0x03  
 
   GP8XXX_CONFIG_CURRENT_REG           = 0x02
   ## Store function timing start head        
@@ -57,8 +64,10 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
   ## The first half cycle 2 of the total I2C communication cycle  
   I2C_CYCLE_BEFORE                    = 0.000001     
   ## The second half cycle 3 of the total I2C communication cycle
+
   I2C_CYCLE_AFTER                     = 0.000002     
  
+
   def __init__(self,sda,scl,resolution,device_addr=GP8XXX_I2C_DEVICE_ADDR):
     '''!
       @brief I2C class initialization
@@ -117,6 +126,8 @@ class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
       data = data << 4
     elif self._resolution == self.RESOLUTION_15_BIT:
       data = data << 1
+    elif self._resolution == self.RESOLUTION_16_BIT:
+      data = data 
     self._send_data(data, channel)
 
   def store(self):
@@ -301,6 +312,91 @@ class DFRobot_GP8302(DFRobot_GP8XXX_IIC):
     return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_12_BIT,device_addr=i2c_addr)
   def set_dac_out_electric_current(self,data):
     return self.set_dac_out_voltage(data)
+  
+class DFRobot_GP8600_I2C(DFRobot_GP8XXX_IIC):
+    ## Configure for 0-20mA current output mode
+    OUTPUT_RANGE_20MA  =  0x04      
+    ## Configure for 0-5V voltage output mode
+    OUTPUT_RANGE_5V    =  0x00      
+    ## Configure for 0-6V voltage output mode
+    OUTPUT_RANGE_6V    =  0x10     
+     ## Configure for 0-10V voltage output mode
+    OUTPUT_RANGE_10V   =  0x08     
+    ## Configure for 0-12V voltage output mode
+    OUTPUT_RANGE_12V   =  0x18        
+    def set_dac_outrange(self, range):
+      '''!
+        @brief Set the DAC output range
+        @param output_range DAC output range
+        @n     OUTPUT_RANGE_5V(0-5V)
+        @n     OUTPUT_RANGE_6V(0-6V)
+        @n     OUTPUT_RANGE_10V(0-10V)
+        @n     OUTPUT_RANGE_12V(0-12V)
+        @n     OUTPUT_RANGE_20MA(0-20mA)
+        @return NONE
+      '''
+      if range == self.OUTPUT_RANGE_5V :
+        list =[self.OUTPUT_RANGE_5V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_6V :
+        list = [self.OUTPUT_RANGE_6V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_10V :
+        list = [self.OUTPUT_RANGE_10V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_12V :
+        list = [self.OUTPUT_RANGE_12V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_20MA :
+        list = [self.OUTPUT_RANGE_20MA]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+    def __init__(self,i2c_sda,i2c_scl,i2c_addr=0x58):
+      return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_16_BIT,device_addr=i2c_addr)
+class DFRobot_GP8630N_I2C(DFRobot_GP8XXX_IIC):
+    ## Configure for 0-20mA current output mode
+    OUTPUT_RANGE_20MA  =  0x24      
+    ## Configure for 0-24mA current output mode
+    OUTPUT_RANGE_24MA  =  0x20      
+    ## Configure for -10-0V voltage output mode
+    OUTPUT_RANGE_10_0V    =  0x14      
+    ## Configure for -12-0V voltage output mode
+    OUTPUT_RANGE_12_0V    =  0x10     
+     ## Configure for 0-10V voltage output mode
+    OUTPUT_RANGE_10V   =  0x1C     
+    ## Configure for 0-12V voltage output mode
+    OUTPUT_RANGE_12V   =  0x18        
+    def set_dac_outrange(self, range):
+      '''!
+        @brief Set the DAC output range
+        @param output_range DAC output range
+        @n     OUTPUT_RANGE_20MA(0-20mA)
+        @n     OUTPUT_RANGE_24MA(0-24mA)
+        @n     OUTPUT_RANGE_10_0V(-10-0V)
+        @n     OUTPUT_RANGE_12_0V(-12-0V)
+        @n     OUTPUT_RANGE_10V(0-10V)
+        @n     OUTPUT_RANGE_12V(0-12V)
+        @return NONE
+      '''
+      if range == self.OUTPUT_RANGE_20MA :
+        list =[self.OUTPUT_RANGE_20MA]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_24MA :
+        list = [self.OUTPUT_RANGE_24MA]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_10_0V :
+        list = [self.OUTPUT_RANGE_10_0V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_12_0V :
+        list = [self.OUTPUT_RANGE_12_0V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)
+      elif range == self.OUTPUT_RANGE_10V :
+        list = [self.OUTPUT_RANGE_10V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)     
+      elif range == self.OUTPUT_RANGE_12V :
+        list = [self.OUTPUT_RANGE_12V]
+        self._write_reg(self.GP8XXX_MODEL_ADDR,list,1)    
+    def __init__(self,i2c_sda,i2c_scl,i2c_addr=0x58):
+      return super().__init__(sda=i2c_sda,scl=i2c_scl,resolution=self.RESOLUTION_16_BIT,device_addr=i2c_addr)
 
 class DFRobot_GP8XXX_PWM(DFRobot_GP8XXX):
 
@@ -328,6 +424,7 @@ class DFRobot_GP8XXX_PWM(DFRobot_GP8XXX):
       GPIO.setup(self._pin1, GPIO.OUT)  # Set pin R1 direction output
       self._PWM1 = GPIO.PWM(self._pin1,100)
       self._PWM1.start(0)
+    return 1
 
   def set_dac_out_voltage(self, data, channel=0):
     '''!
@@ -356,5 +453,21 @@ class DFRobot_GP8501(DFRobot_GP8XXX_PWM):
     return super().__init__(pin0,pin1)
 
 class DFRobot_GP8101(DFRobot_GP8XXX_PWM):
+  def __init__(self,pin0=-1):
+    return super().__init__(pin0,-1)
+  
+class DFRobot_GP8101S(DFRobot_GP8XXX_PWM):
+  def __init__(self,pin0=-1):
+    return super().__init__(pin0,-1)
+
+class DFRobot_GP210(DFRobot_GP8XXX_PWM):
+  def __init__(self,pin0=-1):
+    return super().__init__(pin0,-1)
+
+class DFRobot_GP8600_PWM(DFRobot_GP8XXX_PWM):
+  def __init__(self,pin0=-1):
+    return super().__init__(pin0,-1)
+
+class DFRobot_GP8630N_PWM(DFRobot_GP8XXX_PWM):
   def __init__(self,pin0=-1):
     return super().__init__(pin0,-1)

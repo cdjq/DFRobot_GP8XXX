@@ -2,7 +2,7 @@
 
 * [中文版](./README_CN.md)
 
-GP8XXX series driver libraries on the Arduino IDE (currently compatible with GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302)
+GP8XXX series driver libraries for Arduino IDE (currently compatible with GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210)  
 
 ## Product Link([www.dfrobot.com](www.dfrobot.com))
 
@@ -10,12 +10,15 @@ SUK：
 
 1. DFR1034 --- GP8503
 2. DFR1035 --- GP8512
-3. DFR1036 --- GP8101
+3. DFR1036 --- GP8101S
 4. DFR1037 --- GP8501
 5. DFR1071 --- GP8211S
 6. DFR1073 --- GP8413
 7. DFR0971 --- GP8403
 8. DFR0972 --- GP8302
+9. DFR1228 --- GP210  
+10. DFR1229 --- GP8600  
+11. DFR1230 --- GP8630N  
 
 ## Table of Contents
 
@@ -27,7 +30,7 @@ SUK：
   - [Credits](#credits)
 
 ## Summary
-    This library has already provided sample demos for each of the 8 currently compatible products, and users can use them according to their names
+    This library has already provided sample demos for each of the 11 currently compatible products, and users can use them according to their names
 ## Installation
 
 There two methods: 
@@ -71,14 +74,20 @@ There two methods:
      */
     int begin(void);
 
-    /**
-     * @fn setDACOutRange
-     * @brief Set the DAC output range
-     * @param range DAC output range
-     * @n     eOutputRange0_5V(0-5V)
-     * @n     eOutputRange0_10V(0-10V)
-     * @return NONE
-     */
+    /**  
+     * @fn setDACOutRange  
+     * @brief Configure DAC output range  
+     * @param range Output range options:  
+     * @n  eOutputRange5V(0-5V)
+     * @n  eOutputRange6V(0-6V)
+     * @n  eOutputRange10V(0-10V)
+     * @n  eOutputRange_10V(-10-0V)
+     * @n  eOutputRange_12V(-12-0V)
+     * @n  eOutputRange12V(0-12V)
+     * @n  eOutputRange20MA(0-20mA)
+     * @n  eOutputRange24MA(0-24mA)
+     * @return None  
+     */  
     void setDACOutRange(eOutPutRange_t range);
 
     /**
@@ -104,9 +113,9 @@ There two methods:
 
 ## Compatibility
 
-MCU                |  Work Well    | Work Wrong   | Untested    | Remarks
+MCU                |  Work Well   | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-Arduino Uno        |       √       |              |             | 
+Arduino Uno        |      √       |              |             | 
 Mega2560           |      √       |              |             | 
 Leonardo           |      √       |              |             | 
 ESP32              |      √       |              |             | 
@@ -117,7 +126,8 @@ FireBeetle M0      |      √       |              |             |
 ## History
 
 - 2023/05/10 - Version 1.0.0 released.
-
+- 2025/07/04  - Version 1.0.0 released. add GP8600, GP8630N, GP210
 ## Credits
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))
+- Written by lr  ( rong.li@dfrobot.com),   2025. (Welcome to our [website](https://www.dfrobot.com/))
