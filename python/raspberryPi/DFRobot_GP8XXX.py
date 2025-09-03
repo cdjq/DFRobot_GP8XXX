@@ -43,10 +43,6 @@ class DFRobot_GP8XXX(ABC):
 class DFRobot_GP8XXX_IIC(DFRobot_GP8XXX):
   ## Device model identification register address
   GP8XXX_MODEL_ADDR  =  0x01        
-  ## Low byte data configuration register address
-  GP8XXX_LDATA_ADDR  =  0x02        
-  ## High byte data configuration register address
-  GP8XXX_HDATA_ADDR  =  0x03  
 
   GP8XXX_CONFIG_CURRENT_REG           = 0x02
   ## Store function timing start head        

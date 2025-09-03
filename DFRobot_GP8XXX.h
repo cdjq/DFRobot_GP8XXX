@@ -21,14 +21,13 @@ class DFRobot_GP8XXX
   public:
     /**
      * @enum eOutPutRange_t
-     * @brief Selection of output range for simulated voltage and current
+     * @brief Analog voltage output range select
      */
     typedef enum{
       eOutputRange2_5V  = 0,
       eOutputRange5V  = 1,
       eOutputRange10V = 2,
       eOutputRangeVCC   = 3
-
     }eOutPutRange_t;
     DFRobot_GP8XXX(){
 
@@ -72,8 +71,6 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
     #define I2C_CYCLE_AFTER                     2     ///< The second half cycle 3 of the total I2C communication cycle
 
     #define GP8XXX_MODEL_ADDR     0x01        ///< Device model identification register address
-    #define GP8XXX_LDATA_ADDR     0x02        ///< Low byte data configuration register address
-    #define GP8XXX_HDATA_ADDR     0x03        ///< High byte data configuration register address
 
     /**
      * @brief DFRobot_GP8XXX constructor
@@ -121,6 +118,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      * @return NONE
      */
     void store(void);
+	
 
   protected:
     /**
@@ -197,7 +195,8 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
       int _sda = SDA;
     #endif
 
-       
+    
+    
 };
 
 class DFRobot_GP8503: public DFRobot_GP8XXX_IIC
@@ -364,7 +363,6 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
 	  int _pin1=-1;
   
 };
-
 
 class DFRobot_GP8501: public DFRobot_GP8XXX_PWM
 {
