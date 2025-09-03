@@ -42,7 +42,34 @@ There two methods:
 
 ```python
 
- #################I2C系列#################
+
+################# PWM Series #################
+
+  def begin(self)
+    '''!
+      @brief Initialize the function
+      @return 0
+    '''
+
+  def set_dac_out_voltage(self, data, channel=0)
+    '''!
+      @brief Set different channel output DAC values, module outputs corresponding voltage values
+      @param data pwm pulse width
+      @param channel output channel
+      @n 0: Channel 0 (valid when PWM0 output is configured)
+      @n 1: Channel 1 (effective when PWM1 output is configured)
+      @n 2: All channels (valid when configuring dual channel outputs)
+      @return NONE
+    '''
+  def set_dac_out_electric_current(self,data):
+    '''!
+      @brief Set DAC output value, module outputs corresponding current
+      @param data pwm pulse width
+      @return NONE
+    '''
+
+
+ ################# I2C Series #################
   def begin(self)
     '''!
       @brief Initialize the function
@@ -54,13 +81,7 @@ There two methods:
       @brief Set the DAC output range
       @param range DAC output range
       @n     OUTPUT_RANGE_5V(0-5V)
-      @n     OUTPUT_RANGE_6V(0-6V)
-      @n     OUTPUT_RANGE_10V(0-10V)
-      @n     OUTPUT_RANGE_12V(0-12V)
-      @n     OUTPUT_RANGE_10_0V(-10-0V)
-      @n     OUTPUT_RANGE_12_0V(-12-0V)
-      @n     OUTPUT_RANGE_20MA(0-20mA)
-      @n     OUTPUT_RANGE_24MA(0-24mA)
+      @n     OUTPUT_RANGE_10V(0-10V)      
       @return NONE
     '''
 
@@ -81,23 +102,34 @@ There two methods:
       @return NONE
     '''
 
-
-#################PWM系列#################
-
+################# I2C & PWM Series #################
   def begin(self)
     '''!
       @brief Initialize the function
-      @return 0
+      @return returns 0 for success, and other values for failure 
     '''
 
-  def set_dac_out_voltage(self, data, channel=0)
+  def set_dac_outrange(self, range)
     '''!
-      @brief Set different channel output DAC values
-      @param data pwm pulse width
-      @param channel output channel
-      @n 0: Channel 0 (valid when PWM0 output is configured)
-      @n 1: Channel 1 (effective when PWM1 output is configured)
-      @n 2: All channels (valid when configuring dual channel outputs)
+      @brief Set the DAC output range (only valid in I2C mode)
+      @param range DAC output range
+      @n     OUTPUT_RANGE_5V(0-5V)
+      @n     OUTPUT_RANGE_6V(0-6V)        GP8630N, GP8600
+      @n     OUTPUT_RANGE_10V(0-10V)      
+      @n     OUTPUT_RANGE_12V(0-12V)      GP8630N
+      @n     OUTPUT_RANGE_10_0V(-10-0V)   GP8630N
+      @n     OUTPUT_RANGE_12_0V(-12-0V)   GP8630N, GP8600
+      @n     OUTPUT_RANGE_20MA(0-20mA)    
+      @n     OUTPUT_RANGE_24MA(0-24mA)    GP8630N, GP210
+      @return NONE
+    '''
+
+  def set_dac_out_data(self, data)
+    '''!
+      @brief Set single channel module output DAC value
+      @param data data DAC value
+      @note In PWM mode, output current/voltage values based on PWM pulse width, select current/voltage output range according to silkscreen on    @note module back
+      @note  In I2C mode, output current/voltage values according to the output range set by setDACOutRange()
       @return NONE
     '''
 
@@ -120,8 +152,8 @@ There two methods:
 
 ## History
 
-- 2023/05/10 - Version 1.0.0 released.
-- 2025/07/04  - Version 1.0.0 released. add GP8600, GP8630N, GP210
+- 2023/5/10 - Version 1.0.0 released.
+- 2025/9/3  - Version 1.1.0 released. add GP8600, GP8630N, GP210
 ## Credits
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))

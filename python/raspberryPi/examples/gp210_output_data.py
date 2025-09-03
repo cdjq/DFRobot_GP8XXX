@@ -27,10 +27,12 @@ def setup():
   '''
     @brief Set the output DAC value
     @param data PWM duty cycle (0.0-100.0)
-    @n The optional parameter (0.0-100.0) corresponds to an output of 0 - 25mA current signal.
+    @n The optional parameter (0.0-100.0) corresponds to an output of 0 - 24mA current signal.
+    @n If you want to output a 4-20mA current signal, please use the following: 
+    @n For example: DAC.set_dac_out_electric_current(max(data*0.84, 16.6))
   '''
   data=100.0
-  DAC.set_dac_out_voltage(data)
+  DAC.set_dac_out_electric_current(data)
 
 def loop():
   pass

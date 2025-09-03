@@ -13,7 +13,7 @@
 /*
   For communication using I2C, please enable the following macro definitions. Using the PWM mode, please disable the following macro definition
 */
-// #define I2C_COMMUNICATION 
+#define I2C_COMMUNICATION 
 
 /**************************
 ----------------------------
@@ -57,7 +57,7 @@ void setup() {
 #ifdef  I2C_COMMUNICATION
   Serial.begin(9600);
   while(GP8600.begin()!=0){
-    Serial.println("Communication with the device failed. Please check if the connection is normal or if the device address is set correctly.");
+    Serial.println("Communication with the device failed.\r\n Please check if the connection is normal or if the device address is set correctly.");
     delay(1000);
   }
   Serial.println("Successful connection!");
@@ -77,6 +77,7 @@ void setup() {
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0-5V or 0-6V or 0-10V or 0-12V or 0-20MA, respectively.
    */	
   GP8600.setDACOutData(65535);
+
 #else
   double data=255;
   GP8600.begin();

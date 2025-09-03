@@ -42,7 +42,7 @@ There two methods:
 ```C++
 
 /**************************************************************************
-                                  PWM 系列
+                                  PWM Series
  **************************************************************************/
 
 	  /**
@@ -54,7 +54,7 @@ There two methods:
 
     /**
      * @fn setDACOutVoltage
-     * @brief Set different channel output DAC values
+     * @brief Set different channel output DAC values, module outputs corresponding voltage values
      * @param data PWM pulse width
      * @param channel output channel
      * @n 0: Channel 0 (valid when PWM0 output is configured)
@@ -64,8 +64,16 @@ There two methods:
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
 
+    /**
+     * @fn setDACOutElectricCurrent
+     * @brief Set DAC output value, module outputs corresponding current
+     * @param data PWM pulse width
+     * @return NONE
+     */
+    void setDACOutElectricCurrent(uint16_t data);
+
 /**************************************************************************
-                                  I2C 系列
+                                  I2C Series
  **************************************************************************/
     /**
      * @fn begin
@@ -79,14 +87,8 @@ There two methods:
      * @brief Configure DAC output range  
      * @param range Output range options:  
      * @n  eOutputRange5V(0-5V)
-     * @n  eOutputRange6V(0-6V)
-     * @n  eOutputRange10V(0-10V)
-     * @n  eOutputRange_10V(-10-0V)
-     * @n  eOutputRange_12V(-12-0V)
-     * @n  eOutputRange12V(0-12V)
-     * @n  eOutputRange20MA(0-20mA)
-     * @n  eOutputRange24MA(0-24mA)
-     * @return None  
+     * @n  eOutputRange10V(0-10V)    
+     * @return NONE
      */  
     void setDACOutRange(eOutPutRange_t range);
 
@@ -109,6 +111,43 @@ There two methods:
      */
     void store(void);
 
+/**************************************************************************
+                                  I2C & PWM Series
+ **************************************************************************/
+    /**
+     * @fn begin
+     * @brief Initialize the function
+     * @return returns 0 for success, and other values for failure 
+     */
+    int begin(void);
+
+    /**
+     * @fn setDACOutRange
+     * @brief Set DAC output range
+     * @param range DAC output range
+     * @n  eOutputRange5V(0-5V)
+     * @n  eOutputRange6V(0-6V)       GP8630N、GP8600
+     * @n  eOutputRange10V(0-10V)     
+     * @n  eOutputRange_10V(-10-0V)   GP8630N
+     * @n  eOutputRange_12V(-12-0V)   GP8630N
+     * @n  eOutputRange12V(0-12V)     GP8630N、GP8600
+     * @n  eOutputRange20MA(0-20mA)
+     * @n  eOutputRange24MA(0-24mA)   GP8630N、GP210  
+     * @return NONE
+     */	
+    void setDACOutRange(eOutPutRange_t range);
+
+    /**
+     * @fn setDACOutData
+     * @brief Set single channel module output DAC value
+     * @param data data DAC value
+     * @note In PWM mode, output current/voltage values based on PWM pulse width, select current/voltage output range according to silkscreen on * * @note module back
+     * @note  In I2C mode, output current/voltage values according to the output range set by setDACOutRange()
+     * @return NONE
+     */
+
+    void setDACOutData(uint16_t data);
+
 ```
 
 ## Compatibility
@@ -125,8 +164,8 @@ FireBeetle M0      |      √       |              |             |
 
 ## History
 
-- 2023/05/10 - Version 1.0.0 released.
-- 2025/07/04  - Version 1.0.0 released. add GP8600, GP8630N, GP210
+- 2023/5/10 - Version 1.0.0 released.
+- 2025/9/3  - Version 1.1.0 released. add GP8600, GP8630N, GP210
 ## Credits
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))

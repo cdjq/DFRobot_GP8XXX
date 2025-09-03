@@ -49,6 +49,11 @@ void DFRobot_GP8XXX_IIC::setDACOutVoltage(uint16_t voltage, uint8_t channel)
   sendData(voltage, channel);
 }
 
+void DFRobot_GP8XXX_IIC::setDACOutData(uint16_t data)
+{
+  sendData(data, 0);
+}
+
 void DFRobot_GP8512::setDACOutVoltage(uint16_t voltage, uint8_t channel)
 {
   if(voltage > _resolution)

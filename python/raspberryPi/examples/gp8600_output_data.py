@@ -52,7 +52,7 @@ def setup():
       @n (0 - 65535) In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0-5V or 0-6V or 0-10V or 0-12V or 0-20MA, respectively.
       @param channel output channel
     '''
-    DAC.set_dac_out_voltage(65535)
+    DAC.set_dac_out_data(65535)
   else:
     DAC.begin()
     data = 100.0
@@ -62,12 +62,11 @@ def setup():
       @n In PWM mode, all settings depend on the dip switch. For details, please refer to the back of the module.
       @n The optional parameter (0.0-100.0) corresponds to an output of 0 - 20mA current signal.
       @n If you want to output a 4-20mA current signal, please use the following: 
-      @n For example: DAC.set_dac_out_voltage(max(data, 16.6))
+      @n For example: DAC.set_dac_out_data(max(data, 16.6))
       @n If you want to output a 0-5V or 0-10V voltage signal, please multiply it by the proportion coefficient of 0.84.
-      @n For example: DAC.set_dac_out_voltage(data*0.84);
+      @n For example: DAC.set_dac_out_data(data*0.84);
    '''
-    DAC.set_dac_out_voltage(data)
-
+    DAC.set_dac_out_data(data)
 def loop():
   pass
 

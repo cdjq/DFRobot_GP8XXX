@@ -55,8 +55,8 @@ SUK：
 
     /**
      * @fn setDACOutVoltage
-     * @brief 设置不同通道输出DAC值
-     * @param data pwm 脉宽
+     * @brief 设置不同通道输出DAC值，模块输出对应电压值
+     * @param data PWM 脉宽
      * @param channel 输出通道
      * @n  0:通道0  (配置PWM0输出时有效)
      * @n  1:通道1  (配置PWM1输出时有效)
@@ -64,6 +64,14 @@ SUK：
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
+
+    /**
+     * @fn setDACOutElectricCurrent
+     * @brief 设置输出DAC值，模块输出对应电流 
+     * @param data PWM脉宽
+     * @return NONE
+     */
+    void setDACOutElectricCurrent(uint16_t data);
 
 /**************************************************************************
                                   I2C 系列
@@ -80,13 +88,7 @@ SUK：
      * @brief 设置DAC输出范围
      * @param range DAC输出范围
      * @n  eOutputRange5V(0-5V)
-     * @n  eOutputRange6V(0-6V)
-     * @n  eOutputRange10V(0-10V)
-     * @n  eOutputRange_10V(-10-0V)
-     * @n  eOutputRange_12V(-12-0V)
-     * @n  eOutputRange12V(0-12V)
-     * @n  eOutputRange20MA(0-20mA)
-     * @n  eOutputRange24MA(0-24mA)
+     * @n  eOutputRange10V(0-10V)    
      * @return NONE
      */	
     void setDACOutRange(eOutPutRange_t range);
@@ -109,6 +111,42 @@ SUK：
      * @return NONE
      */
     void store(void);
+    
+/**************************************************************************
+                                  I2C & PWM 系列
+  **************************************************************************/
+    /**
+     * @fn begin
+     * @brief 初始化函数
+     * @return 返回0表示成功，其他值表示失败 
+     */
+    int begin(void);
+
+    /**
+     * @fn setDACOutRange
+     * @brief 设置DAC输出范围(仅I2C模式下有效)
+     * @param range DAC输出范围
+     * @n  eOutputRange5V(0-5V)
+     * @n  eOutputRange6V(0-6V)       GP8630N、GP8600
+     * @n  eOutputRange10V(0-10V)     
+     * @n  eOutputRange_10V(-10-0V)   GP8630N
+     * @n  eOutputRange_12V(-12-0V)   GP8630N
+     * @n  eOutputRange12V(0-12V)     GP8630N、GP8600
+     * @n  eOutputRange20MA(0-20mA)
+     * @n  eOutputRange24MA(0-24mA)   GP8630N、GP210 
+     * @return NONE
+     */	
+    void setDACOutRange(eOutPutRange_t range);
+
+    /**
+     * @fn setDACOutData
+     * @brief 设置单通道模块输出DAC值
+     * @param data DAC值
+     * @note  PWM模式下根据PWM脉宽输出电流/电压值，根据模块背面的丝印，拨码选择电流/电压输出范围
+     * @note  I2C模式下根据setDACOutRange()设置的输出范围输出电流/电压值
+     * @return NONE
+     */
+    void setDACOutData(uint16_t data);
 
 ```
 
@@ -128,7 +166,7 @@ FireBeetle M0      |      √       |              |             |
 ## 历史
 
 - 2023/5/10 - 1.0.0 版本
-- 2025/7/4  - 1.1.0 版本 适配GP8600, GP8630N, GP210
+- 2025/9/3  - 1.1.0 版本 适配GP8600, GP8630N, GP210
 
 ## 创作者
 

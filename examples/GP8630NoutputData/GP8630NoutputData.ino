@@ -14,7 +14,7 @@
 /*
   For communication using I2C, please enable the following macro definitions. Using the PWM mode, please disable the following macro definition
 */
-// #define I2C_COMMUNICATION 
+#define I2C_COMMUNICATION 
 
 /**************************
 ----------------------------
@@ -77,7 +77,7 @@ void setup() {
    * @param range DAC output range.
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0~10V or -10~0V or 0~12V or ~12-0V or 0~20MA or 0~24MA, respectively.
    * @n If you want to output a 0-5V voltage signal , please multiply it by the proportion coefficient of 0.5.
-   * @n For example: setDACOutData(65535*0.5);
+   * @n For example: GP8630N.setDACOutRange(GP8630N.eOutputRange10V);    GP8630N.setDACOutData(65535*0.5);
    */	
   GP8630N.setDACOutData(65535);
 #else

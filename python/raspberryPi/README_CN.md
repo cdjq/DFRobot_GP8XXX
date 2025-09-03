@@ -44,6 +44,32 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
 
 ```python
 
+#################PWM系列#################
+
+  def begin(self)
+    '''!
+      @brief 初始化函数
+      @return 0
+    '''
+
+  def set_dac_out_voltage(self, data, channel=0)
+    '''!
+      @brief 设置不同通道输出DAC值，模块输出对应电压值
+      @param data pwm 脉宽
+      @param channel 输出通道
+      @n  0:通道0  (配置PWM0输出时有效)
+      @n  1:通道1  (配置PWM1输出时有效)
+      @n  2:全部通道 (配置双通道输出时有效)
+      @return NONE
+    '''
+  def set_dac_out_electric_current(self,data):
+    '''!
+      @brief 设置输出DAC值，模块输出对应电流
+      @param data pwm 脉宽
+      @return NONE
+    '''
+
+
 #################I2C系列#################
   def begin(self)
     '''!
@@ -56,13 +82,7 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
       @brief 设置DAC输出范围
       @param range DAC输出范围
       @n     OUTPUT_RANGE_5V(0-5V)
-      @n     OUTPUT_RANGE_6V(0-6V)
       @n     OUTPUT_RANGE_10V(0-10V)
-      @n     OUTPUT_RANGE_12V(0-12V)
-      @n     OUTPUT_RANGE_10_0V(-10-0V)
-      @n     OUTPUT_RANGE_12_0V(-12-0V)
-      @n     OUTPUT_RANGE_20MA(0-20mA)
-      @n     OUTPUT_RANGE_24MA(0-24mA)
       @return NONE
     '''
 
@@ -83,23 +103,34 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
       @return NONE
     '''
 
-
-#################PWM系列#################
-
+################# I2C & PWM 系列#################
   def begin(self)
     '''!
       @brief 初始化函数
-      @return 0
+      @return 返回0表示成功，其他值表示失败 
     '''
 
-  def set_dac_out_voltage(self, data, channel=0)
+  def set_dac_outrange(self, range)
     '''!
-      @brief 设置不同通道输出DAC值
-      @param data pwm 脉宽
-      @param channel 输出通道
-      @n  0:通道0  (配置PWM0输出时有效)
-      @n  1:通道1  (配置PWM1输出时有效)
-      @n  2:全部通道 (配置双通道输出时有效)
+      @brief 设置DAC输出范围(仅I2C模式下有效)
+      @param range DAC输出范围
+      @n     OUTPUT_RANGE_5V(0-5V)
+      @n     OUTPUT_RANGE_6V(0-6V)        GP8630N、GP8600
+      @n     OUTPUT_RANGE_10V(0-10V)      
+      @n     OUTPUT_RANGE_12V(0-12V)      GP8630N
+      @n     OUTPUT_RANGE_10_0V(-10-0V)   GP8630N
+      @n     OUTPUT_RANGE_12_0V(-12-0V)   GP8630N、GP8600
+      @n     OUTPUT_RANGE_20MA(0-20mA)    
+      @n     OUTPUT_RANGE_24MA(0-24mA)    GP8630N、GP210
+      @return NONE
+    '''
+
+  def set_dac_out_data(self, data)
+    '''!
+      @brief 设置单通道模块输出DAC值
+      @param data DAC值
+      @note PWM模式下根据PWM脉宽输出电流/电压值，根据模块背面的丝印，拨码选择电流/电压输出范围
+      @note I2C模式下根据setDACOutRange()设置的输出范围输出电流/电压值
       @return NONE
     '''
 
@@ -124,7 +155,7 @@ sudo git clone https://github.com/DFRobot/DFRobot_GP8403
 ## 历史
 
 - 2023/5/10 - 1.0.0 版本
-- 2025/7/4  - 1.1.0 版本 适配GP8600, GP8630N, GP210
+- 2025/9/3  - 1.1.0 版本 适配GP8600, GP8630N, GP210
 
 ## 创作者
 

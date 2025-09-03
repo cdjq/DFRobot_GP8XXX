@@ -51,7 +51,7 @@ def setup():
       @param data value corresponding to the data voltage value
       @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0~10V or -10~0V or 0~12V or ~12-0V or 0~20MA or 0~24MA, respectively.
     '''
-    DAC.set_dac_out_voltage(65535)
+    DAC.set_dac_out_data(65535)
   else:
     DAC.begin()
     data = 100.0
@@ -65,9 +65,9 @@ def setup():
       @n If you want to output a 0-5V voltage signal , please multiply it by the proportion coefficient of 0.5.
       @n For example: setDACOutVoltage(data*0.5);
       @n If you want to output a 4-20mA current signal, please use the following: 
-      @n For example: DAC.set_dac_out_voltage(max(data*0.84, 16.6))
+      @n For example: DAC.set_dac_out_data(max(data*0.84, 16.6))
    '''
-    DAC.set_dac_out_voltage(data)
+    DAC.set_dac_out_data(data)
     
 
 def loop():
