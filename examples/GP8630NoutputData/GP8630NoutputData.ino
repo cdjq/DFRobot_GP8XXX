@@ -71,7 +71,7 @@ void setup() {
    * @n    eOutputRange20MA(0~20MA)
    * @n    eOutputRange24MA(0~24MA)
    */	
-  GP8630N.setDACOutRange(GP8630N.eOutputRange10V);
+  GP8630N.setDACOutRange(GP8630N.eOutputRange20MA);
    /**
    * @brief Set the DAC output range.
    * @param range DAC output range.
@@ -79,9 +79,9 @@ void setup() {
    * @n If you want to output a 0-5V voltage signal , please multiply it by the proportion coefficient of 0.5.
    * @n For example: GP8630N.setDACOutRange(GP8630N.eOutputRange10V);    GP8630N.setDACOutData(65535*0.5);
    */	
-  GP8630N.setDACOutData(65535);
+  uint16_t data=65535;
+  GP8630N.setDACOutData(data);
 #else
-  double data=255;
   GP8630N.begin();
    /**
    * @brief Set the DAC output data.
@@ -89,15 +89,16 @@ void setup() {
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 255 correspond to ranges of 0~12V or -12~0V or 0~24MA, respectively.
    * @n However, when you use esp32 or esp8266, the range of this data will change to 0 - 1023.
    * @n In PWM mode, all settings depend on the dip switch. For details, please refer to the back of the module.
-   * @n If you want to output a -10-0V or 0-10V voltage signal , please multiply it by the proportion coefficient of 0.84.
-   * @n For example: setDACOutData(data*0.84);
+   * @n If you want to output a -10-0V or 0-10V voltage signal , please multiply it by the proportion coefficient of 0.83.
+   * @n For example: setDACOutData(data*0.83);
    * @n If you want to output a 0-5V voltage signal , please multiply it by the proportion coefficient of 0.5.
    * @n For example: setDACOutData(data*0.5);
    * @n If you want to output a 4-20mA current signal, please use the following: 
-   * @n For example: GP8630N.setDACOutData(std::max(data*0.84, 42.5));
+   * @n For example: GP8630N.setDACOutData(max(data*0.83, 42.5));
    * @n If you wish to output a 4 - 20 milliampere current signal and are using esp32 or esp8266, please use the following method:
-   * @n For example: GP8630N.setDACOutData(std::max(data*0.84, 170.5));
+   * @n For example: GP8630N.setDACOutData(max(data*0.83, 170.5));
    */	
+   uint16_t data=400;
   GP8630N.setDACOutData(data);
 #endif 
 }

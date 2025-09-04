@@ -13,7 +13,7 @@
 /*
   For communication using I2C, please enable the following macro definitions. Using the PWM mode, please disable the following macro definition
 */
-#define I2C_COMMUNICATION 
+// #define I2C_COMMUNICATION 
 
 /**************************
 ----------------------------
@@ -57,7 +57,7 @@ void setup() {
 #ifdef  I2C_COMMUNICATION
   Serial.begin(9600);
   while(GP8600.begin()!=0){
-    Serial.println("Communication with the device failed.\r\n Please check if the connection is normal or if the device address is set correctly.");
+    Serial.println("Communication with the device failed. Please check if the connection is normal or if the device address is set correctly.");
     delay(1000);
   }
   Serial.println("Successful connection!");
@@ -70,16 +70,17 @@ void setup() {
    * @n    eOutputRange12V(0-12V)
    * @n    eOutputRange20MA(0-20MA)
    */	
-  GP8600.setDACOutRange(GP8600.eOutputRange5V);
+  GP8600.setDACOutRange(GP8600.eOutputRange12V);
    /**
    * @brief Set the DAC output range.
    * @param range DAC output range.
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0-5V or 0-6V or 0-10V or 0-12V or 0-20MA, respectively.
    */	
-  GP8600.setDACOutData(65535);
+  uint16_t data=65535;
+  GP8600.setDACOutData(data);
 
 #else
-  double data=255;
+
   GP8600.begin();
    /**
    * @brief Set the DAC output data.
@@ -87,13 +88,14 @@ void setup() {
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 255 correspond to ranges of or 0-6V or 0-12V or 0-20MA, respectively.
    * @n However, when you use esp32 or esp8266, the range of this data will change to 0 - 1023.
    * @n In PWM mode, all settings depend on the dip switch. For details, please refer to the back of the module.
-   * @n If you want to output a 0-5V or 0-10V voltage signal, please multiply it by the proportion coefficient of 0.84.
-   * @n For example: GP8600.setDACOutData(data*0.84);
+   * @n If you want to output a 0-5V or 0-10V voltage signal, please multiply it by the proportion coefficient of 0.83.
+   * @n For example: GP8600.setDACOutData(data*0.83);
    * @n If you want to output a 4-20mA current signal, please use the following: 
-   * @n For example: GP8600.setDACOutData(std::max(data, 42.5));
+   * @n For example: GP8600.setDACOutData(max(data, 42.5));
    * @n If you wish to output a 4 - 20 milliampere current signal and are using esp32 or esp8266, please use the following method:
-   * @n For example: GP8600.setDACOutData(std::max(data*0.84, 170.5));
+   * @n For example: GP8600.setDACOutData(max(data*0.83, 170.5));
    */	
+  uint16_t data=255;
   GP8600.setDACOutData(data);
 #endif 
 

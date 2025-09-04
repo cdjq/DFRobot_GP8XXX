@@ -19,7 +19,6 @@
 #endif
 DFRobot_GP210 GP210(pwmPin);
 void setup() {
-  double data=255;
   GP210.begin();
   
   /**
@@ -29,10 +28,11 @@ void setup() {
    * @n If you are using esp32 or esp8266, you must use a larger range to improve the accuracy.
    * @n The optional parameters (0 - 1023) when using esp32 or esp8266 correspond to a current signal output ranging from 0 to 24 milliamps.
    * @n If you want to output a 4-20mA current signal, please use the following: 
-   * @n For example: GP210.setDACOutElectricCurrent(std::max(data, 42.5));
+   * @n For example: GP210.setDACOutElectricCurrent(max(data, 42.5));
    * @n If you wish to output a 4 - 20 milliampere current signal and are using esp32 or esp8266, please use the following method:
-   * @n For example: GP210.setDACOutElectricCurrent(std::max(data*0.84, 170.5));
+   * @n For example: GP210.setDACOutElectricCurrent(max(data*0.83, 170.5));
    */
+  double data=255;
   GP210.setDACOutElectricCurrent(data);
 }
 
