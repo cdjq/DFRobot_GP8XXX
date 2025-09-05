@@ -1,6 +1,6 @@
 /*!
   * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
+  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -57,6 +57,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 
     #define RESOLUTION_12_BIT 0x0FFF
     #define RESOLUTION_15_BIT 0x7FFF
+    #define RESOLUTION_16_BIT 0xFFFF
     #define GP8XXX_CONFIG_CURRENT_REG                  uint8_t(0x02)
     #define DFGP8XXX_I2C_DEVICEADDR                    uint8_t(0x58)   //!< i2c address
 
@@ -68,6 +69,8 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
     #define I2C_CYCLE_TOTAL                     5     ///< Total I2C communication cycle
     #define I2C_CYCLE_BEFORE                    1     ///< The first half cycle 2 of the total I2C communication cycle
     #define I2C_CYCLE_AFTER                     2     ///< The second half cycle 3 of the total I2C communication cycle
+
+    #define GP8XXX_MODEL_ADDR     0x01        ///< Device model identification register address
 
     /**
      * @brief DFRobot_GP8XXX constructor
@@ -118,6 +121,13 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
 	
 
   protected:
+    /**
+     * @fn setDACOutVoltage
+     * @brief Set d output DAC values
+     * @param data value corresponding to the DAC value
+     * @return NONE
+     */
+    void setDACOutData(uint16_t data);  
 	  /**
      * @fn sendData
      * @brief Set the IIC input value
@@ -227,6 +237,83 @@ class DFRobot_GP8403: public DFRobot_GP8XXX_IIC
     DFRobot_GP8403(uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_12_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr){};
 };
 
+class DFRobot_GP8600_I2C: private DFRobot_GP8XXX_IIC
+{
+  public:
+    typedef enum{
+      eOutputRange5V  = 0,
+      eOutputRange6V  = 1,
+      eOutputRange10V = 2,
+      eOutputRange12V  = 3,
+      eOutputRange20MA = 4
+    }eOutPutRange_t;
+    using DFRobot_GP8XXX_IIC::begin;
+    using DFRobot_GP8XXX_IIC::setDACOutData;
+    DFRobot_GP8600_I2C(TwoWire *pWire,uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_16_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr,pWire){};
+    void  setDACOutRange(eOutPutRange_t range);
+  private:
+    #define GP8600_0_20MA_MODE    0x04      ///< Configure for 0-20mA current output mode
+    #define GP8600_0_5V_MODE      0x00      ///< Configure for 0-5V voltage output mode
+    #define GP8600_0_6V_MODE      0x10      ///< Configure for 0-6V voltage output mode
+    #define GP8600_0_10V_MODE     0x08      ///< Configure for 0-10V voltage output mode
+    #define GP8600_0_12V_MODE     0x18      ///< Configure for 0-12V voltage output mode
+
+};
+class DFRobot_GP8630N_I2C: private DFRobot_GP8XXX_IIC
+{
+  public:
+    typedef enum{
+      eOutputRange10V    = 0,
+      eOutputRange_10V   = 1,     //-10V -> 0V
+      eOutputRange_12V   = 2,     //-12V -> 0V
+      eOutputRange12V    = 3,
+      eOutputRange20MA   = 4,
+      eOutputRange24MA   = 5
+    }eOutPutRange_t;
+    using DFRobot_GP8XXX_IIC::begin;
+    using DFRobot_GP8XXX_IIC::setDACOutData;
+    DFRobot_GP8630N_I2C(TwoWire *pWire,uint8_t deviceAddr = DFGP8XXX_I2C_DEVICEADDR,uint16_t resolution = RESOLUTION_16_BIT):DFRobot_GP8XXX_IIC(resolution,deviceAddr,pWire){};
+    void  setDACOutRange(eOutPutRange_t range);
+  private:
+    #define GP8630N_0_20MA_MODE    0x24      ///< Configure for 0-20mA current output mode
+    #define GP8630N_0_24MA_MODE    0x20      ///< Configure for 0-24mA current output mode
+    #define GP8630N_10_0V_MODE     0x14      ///< Configure for -10-0V  voltage output mode
+    #define GP8630N_12_0V_MODE     0x10      ///< Configure for -12-0V  voltage output mode
+    #define GP8630N_0_10V_MODE     0x1C      ///< Configure for 0-10V voltage output mode
+    #define GP8630N_0_12V_MODE     0x18      ///< Configure for 0-12V voltage output mode
+};
+
+
+
+/**************************************************************************
+                       PWM to 1 analog voltage modules
+ **************************************************************************/
+class DFRobot_GP8XXX_PWM_SINGLE
+{
+  public:
+    DFRobot_GP8XXX_PWM_SINGLE(int pin0 = -1)
+    :_pin0(pin0){
+
+    }
+	  /**
+     * @fn begin
+     * @brief Initialize the function
+     * @return 0
+     */
+    int begin();
+
+    /**
+     * @fn setDACOutVoltage
+     * @brief Set different channel output DAC values
+     * @param data PWM pulse width
+     * @note  suport 0-255/ 0-1023
+     * @return NONE
+     */
+    void setDACOutData(uint16_t data);
+    protected:
+	    int _pin0=-1;
+};
+
 
 /**************************************************************************
                        PWM to 2 analog voltage modules
@@ -287,6 +374,27 @@ class DFRobot_GP8101: public DFRobot_GP8XXX_PWM
 {
   public:
     DFRobot_GP8101(int pin0 = -1):DFRobot_GP8XXX_PWM(pin0){};
+};
+class DFRobot_GP8101S: public DFRobot_GP8XXX_PWM
+{
+  public:
+    DFRobot_GP8101S(int pin0 = -1):DFRobot_GP8XXX_PWM(pin0){};
+};
+class DFRobot_GP210: public DFRobot_GP8XXX_PWM_SINGLE
+{
+  public:
+    DFRobot_GP210(int pin0 = -1):DFRobot_GP8XXX_PWM_SINGLE(pin0){};
+    void setDACOutElectricCurrent(uint16_t data){setDACOutData(data);};
+};
+class DFRobot_GP8600_PWM: public DFRobot_GP8XXX_PWM_SINGLE
+{
+  public:
+    DFRobot_GP8600_PWM(int pin0 = -1):DFRobot_GP8XXX_PWM_SINGLE(pin0){};
+};
+class DFRobot_GP8630N_PWM: public DFRobot_GP8XXX_PWM_SINGLE
+{
+  public:
+    DFRobot_GP8630N_PWM(int pin0 = -1):DFRobot_GP8XXX_PWM_SINGLE(pin0){};
 };
 
 #endif

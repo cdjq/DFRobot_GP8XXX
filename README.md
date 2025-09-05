@@ -2,7 +2,7 @@
 
 * [中文版](./README_CN.md)
 
-GP8XXX series driver libraries on the Arduino IDE (currently compatible with GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302)
+GP8XXX series driver libraries for Arduino IDE (currently compatible with GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210)  
 
 ## Product Link([www.dfrobot.com](www.dfrobot.com))
 
@@ -10,12 +10,15 @@ SUK：
 
 1. DFR1034 --- GP8503
 2. DFR1035 --- GP8512
-3. DFR1036 --- GP8101
+3. DFR1036 --- GP8101S
 4. DFR1037 --- GP8501
 5. DFR1071 --- GP8211S
 6. DFR1073 --- GP8413
 7. DFR0971 --- GP8403
 8. DFR0972 --- GP8302
+9. DFR1228 --- GP210  
+10. DFR1229 --- GP8600  
+11. DFR1230 --- GP8630N  
 
 ## Table of Contents
 
@@ -27,7 +30,7 @@ SUK：
   - [Credits](#credits)
 
 ## Summary
-    This library has already provided sample demos for each of the 8 currently compatible products, and users can use them according to their names
+    This library has already provided sample demos for each of the 11 currently compatible products, and users can use them according to their names
 ## Installation
 
 There two methods: 
@@ -39,7 +42,7 @@ There two methods:
 ```C++
 
 /**************************************************************************
-                                  PWM 系列
+                                  PWM Series
  **************************************************************************/
 
 	  /**
@@ -51,7 +54,7 @@ There two methods:
 
     /**
      * @fn setDACOutVoltage
-     * @brief Set different channel output DAC values
+     * @brief Set different channel output DAC values, module outputs corresponding voltage values
      * @param data PWM pulse width
      * @param channel output channel
      * @n 0: Channel 0 (valid when PWM0 output is configured)
@@ -61,8 +64,16 @@ There two methods:
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
 
+    /**
+     * @fn setDACOutElectricCurrent
+     * @brief Set DAC output value, module outputs corresponding current
+     * @param data PWM pulse width
+     * @return NONE
+     */
+    void setDACOutElectricCurrent(uint16_t data);
+
 /**************************************************************************
-                                  I2C 系列
+                                  I2C Series
  **************************************************************************/
     /**
      * @fn begin
@@ -71,14 +82,14 @@ There two methods:
      */
     int begin(void);
 
-    /**
-     * @fn setDACOutRange
-     * @brief Set the DAC output range
-     * @param range DAC output range
-     * @n     eOutputRange0_5V(0-5V)
-     * @n     eOutputRange0_10V(0-10V)
+    /**  
+     * @fn setDACOutRange  
+     * @brief Configure DAC output range  
+     * @param range Output range options:  
+     * @n  eOutputRange5V(0-5V)
+     * @n  eOutputRange10V(0-10V)    
      * @return NONE
-     */
+     */  
     void setDACOutRange(eOutPutRange_t range);
 
     /**
@@ -100,13 +111,50 @@ There two methods:
      */
     void store(void);
 
+/**************************************************************************
+                                  I2C & PWM Series
+ **************************************************************************/
+    /**
+     * @fn begin
+     * @brief Initialize the function
+     * @return returns 0 for success, and other values for failure 
+     */
+    int begin(void);
+
+    /**
+     * @fn setDACOutRange
+     * @brief Set DAC output range
+     * @param range DAC output range
+     * @n  eOutputRange5V(0-5V)
+     * @n  eOutputRange6V(0-6V)       GP8630N、GP8600
+     * @n  eOutputRange10V(0-10V)     
+     * @n  eOutputRange_10V(-10-0V)   GP8630N
+     * @n  eOutputRange_12V(-12-0V)   GP8630N
+     * @n  eOutputRange12V(0-12V)     GP8630N、GP8600
+     * @n  eOutputRange20MA(0-20mA)
+     * @n  eOutputRange24MA(0-24mA)   GP8630N、GP210  
+     * @return NONE
+     */	
+    void setDACOutRange(eOutPutRange_t range);
+
+    /**
+     * @fn setDACOutData
+     * @brief Set single channel module output DAC value
+     * @param data data DAC value
+     * @note In PWM mode, output current/voltage values based on PWM pulse width, select current/voltage output range according to silkscreen on * * @note module back
+     * @note  In I2C mode, output current/voltage values according to the output range set by setDACOutRange()
+     * @return NONE
+     */
+
+    void setDACOutData(uint16_t data);
+
 ```
 
 ## Compatibility
 
-MCU                |  Work Well    | Work Wrong   | Untested    | Remarks
+MCU                |  Work Well   | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-Arduino Uno        |       √       |              |             | 
+Arduino Uno        |      √       |              |             | 
 Mega2560           |      √       |              |             | 
 Leonardo           |      √       |              |             | 
 ESP32              |      √       |              |             | 
@@ -116,8 +164,9 @@ FireBeetle M0      |      √       |              |             |
 
 ## History
 
-- 2023/05/10 - Version 1.0.0 released.
-
+- 2023/5/10 - Version 1.0.0 released.
+- 2025/9/3  - Version 1.1.0 released. add GP8600, GP8630N, GP210
 ## Credits
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))
+- Written by lr  ( rong.li@dfrobot.com),   2025. (Welcome to our [website](https://www.dfrobot.com/))
