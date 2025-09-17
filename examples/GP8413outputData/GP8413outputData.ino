@@ -48,7 +48,7 @@ void setup() {
    * @param range DAC output range.
    * @n     eOutputRange5V(0-5V)
    * @n     eOutputRange10V(0-10V)
-   */	
+   */  
   GP8413.setDACOutRange(GP8413.eOutputRange5V);
 
   /**

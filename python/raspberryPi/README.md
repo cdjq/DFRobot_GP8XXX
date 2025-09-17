@@ -4,9 +4,11 @@
 
 GP8XXX series driver library on Raspberry Pi (currently compatible with GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512,GP8403,GP8302, GP8600, GP8630N, GP210)
 
-## Product Link([www.dfrobot.com](www.dfrobot.com))
+![Product Image](../../resources/images/DFR1035.png)
 
-SUK：
+## Product Link (https://www.dfrobot.com.cn/goods-3786.html)
+
+SKU：
 
 1. DFR1034 --- GP8503
 2. DFR1035 --- GP8512
@@ -128,8 +130,10 @@ There two methods:
     '''!
       @brief Set single channel module output DAC value
       @param data data DAC value
-      @note In PWM mode, output current/voltage values based on PWM pulse width, select current/voltage output range according to silkscreen on    @note module back
-      @note  In I2C mode, output current/voltage values according to the output range set by setDACOutRange()
+      @n  In PWM mode, data ranges from 0~255 (0~1023 for ESP32/ESP8266 platforms), representing PWM duty cycle (0~100%)
+      @n  In PWM mode, current/voltage output range is selected via DIP switches according to silkscreen on module back
+      @n  In I2C mode, data ranges from 0~65535, directly corresponding to voltage or current values within the set range
+      @n  In I2C mode, output current/voltage values are determined by the range set_dac_outrange()
       @return NONE
     '''
 

@@ -1,11 +1,11 @@
 /*!
   * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
+  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210 driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
-  * @version  V1.0
-  * @date  2023-05-10
+  * @version V1.1.0
+  * @date 2025-07-04
   * @url https://github.com/DFRobot/DFRobot_GP8XXX
   */
 
@@ -59,7 +59,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
     #define RESOLUTION_15_BIT 0x7FFF
     #define RESOLUTION_16_BIT 0xFFFF
     #define GP8XXX_CONFIG_CURRENT_REG                  uint8_t(0x02)
-    #define DFGP8XXX_I2C_DEVICEADDR                    uint8_t(0x58)   //!< i2c address
+    #define DFGP8XXX_I2C_DEVICEADDR                    uint8_t(0x58)   ///< i2c address
 
     #define GP8XXX_STORE_TIMING_HEAD            0x02  ///< Store function timing start head
     #define GP8XXX_STORE_TIMING_ADDR            0x10  ///< The first address for entering store timing
@@ -111,14 +111,14 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
-	
+  
     /**
      * @fn store
      * @brief Save the set voltage inside the chip
      * @return NONE
      */
     void store(void);
-	
+  
 
   protected:
     /**
@@ -128,7 +128,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      * @return NONE
      */
     void setDACOutData(uint16_t data);  
-	  /**
+    /**
      * @fn sendData
      * @brief Set the IIC input value
      * @param data input value to be set (0-fff)
@@ -138,7 +138,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
-	  void sendData(uint16_t data, uint8_t channel);
+    void sendData(uint16_t data, uint8_t channel);
 
     /**
      * @fn writeRegister
@@ -161,7 +161,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
     /**
      * @fn stopSignal
      * @brief I2C stop signal
-     */	
+     */  
     void stopSignal(void);
 
     /**
@@ -169,7 +169,7 @@ class DFRobot_GP8XXX_IIC:public DFRobot_GP8XXX
      * @brief Receive a reply
      * @param ack signal to be received by ack
      * @return Answer signal
-     */	
+     */  
     uint8_t recvAck(uint8_t ack);
 
     /**
@@ -264,8 +264,8 @@ class DFRobot_GP8630N_I2C: private DFRobot_GP8XXX_IIC
   public:
     typedef enum{
       eOutputRange10V    = 0,
-      eOutputRange_10V   = 1,     //-10V -> 0V
-      eOutputRange_12V   = 2,     //-12V -> 0V
+      eOutputRange_10V   = 1,     ///< -10V -> 0V
+      eOutputRange_12V   = 2,     ///< -12V -> 0V
       eOutputRange12V    = 3,
       eOutputRange20MA   = 4,
       eOutputRange24MA   = 5
@@ -295,7 +295,7 @@ class DFRobot_GP8XXX_PWM_SINGLE
     :_pin0(pin0){
 
     }
-	  /**
+    /**
      * @fn begin
      * @brief Initialize the function
      * @return 0
@@ -311,7 +311,7 @@ class DFRobot_GP8XXX_PWM_SINGLE
      */
     void setDACOutData(uint16_t data);
     protected:
-	    int _pin0=-1;
+      int _pin0=-1;
 };
 
 
@@ -325,7 +325,7 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
     :_pin0(pin0),_pin1(pin1){
 
     }
-	  /**
+    /**
      * @fn begin
      * @brief Initialize the function
      * @return 0
@@ -344,8 +344,8 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
     
-  private:	
-	/**
+  private:  
+  /**
      * @fn sendData
      * @brief Set PWM duty cycle
      * @param data PWM pulse width
@@ -355,12 +355,12 @@ class DFRobot_GP8XXX_PWM: public DFRobot_GP8XXX
      * @n 2: All channels (valid when configuring dual channel output)
      * @return NONE
      */
-	void sendData(uint8_t data, uint8_t channel);
+  void sendData(uint8_t data, uint8_t channel);
   
   protected:
 
-	  int _pin0=-1;
-	  int _pin1=-1;
+    int _pin0=-1;
+    int _pin1=-1;
   
 };
 

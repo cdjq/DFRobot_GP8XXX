@@ -3,9 +3,11 @@
 
 GP8XXX 系列在Arduino IDE 上的驱动库（目前已经兼容GP8101，GP8211S，GP8413，GP8501，GP8503，GP8512，GP8403，GP8302, GP8600, GP8630N, GP210）
 
-## 产品链接([www.dfrobot.com](www.dfrobot.com))
+![产品图](./resources/images/DFR1035.png)
 
-SUK：
+## 产品链接 (https://www.dfrobot.com.cn/goods-3786.html)
+
+SKU：
 
 1. DFR1034 --- GP8503
 2. DFR1035 --- GP8512
@@ -46,7 +48,7 @@ SUK：
                                   PWM 系列
  **************************************************************************/
 
-	/**
+  /**
      * @fn begin
      * @brief 初始化函数
      * @return 0
@@ -90,7 +92,7 @@ SUK：
      * @n  eOutputRange5V(0-5V)
      * @n  eOutputRange10V(0-10V)    
      * @return NONE
-     */	
+     */  
     void setDACOutRange(eOutPutRange_t range);
 
     /**
@@ -104,7 +106,7 @@ SUK：
      * @return NONE
      */
     void setDACOutVoltage(uint16_t data, uint8_t channel=0);
-	
+  
     /**
      * @fn store
      * @brief 将设置的电压保存在芯片内部
@@ -135,15 +137,17 @@ SUK：
      * @n  eOutputRange20MA(0-20mA)
      * @n  eOutputRange24MA(0-24mA)   GP8630N、GP210 
      * @return NONE
-     */	
+     */  
     void setDACOutRange(eOutPutRange_t range);
 
     /**
      * @fn setDACOutData
      * @brief 设置单通道模块输出DAC值
      * @param data DAC值
-     * @note  PWM模式下根据PWM脉宽输出电流/电压值，根据模块背面的丝印，拨码选择电流/电压输出范围
-     * @note  I2C模式下根据setDACOutRange()设置的输出范围输出电流/电压值
+     * @n  PWM模式下data取值范围为0~255（ESP32/ESP8266平台为0~1023），该值对应PWM脉宽占空比(0~100%)
+     * @n  PWM模式下根据模块背面丝印及拨码开关选择电流/电压输出范围
+     * @n  I2C模式下data的范围为0~65535，该值对应设置范围内的电压或电流值
+     * @n  I2C模式下根据setDACOutRange()设置的输出范围来确定实际输出的电流/电压值
      * @return NONE
      */
     void setDACOutData(uint16_t data);

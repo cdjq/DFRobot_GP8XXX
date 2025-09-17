@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 '''!
-  @file  GP8630NoutputData.py
+  @file  GP8630Noutput_data.py
   @brief Output the corresponding analog voltage signal or current signal through pulse width modulation signal or I2C communication.
   @copyright  Copyright (c) 2025 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)

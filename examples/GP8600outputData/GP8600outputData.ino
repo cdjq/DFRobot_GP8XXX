@@ -69,13 +69,13 @@ void setup() {
    * @n    eOutputRange10V(0-10V)
    * @n    eOutputRange12V(0-12V)
    * @n    eOutputRange20MA(0-20MA)
-   */	
+   */  
   GP8600.setDACOutRange(GP8600.eOutputRange12V);
    /**
-   * @brief Set the DAC output range.
-   * @param range DAC output range.
+   * @brief Set the DAC output data.
+   * @param data DAC output data.
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0-5V or 0-6V or 0-10V or 0-12V or 0-20MA, respectively.
-   */	
+   */  
   uint16_t data=65535;
   GP8600.setDACOutData(data);
 
@@ -94,7 +94,7 @@ void setup() {
    * @n For example: GP8600.setDACOutData(max(data, 42.5));
    * @n If you wish to output a 4 - 20 milliampere current signal and are using esp32 or esp8266, please use the following method:
    * @n For example: GP8600.setDACOutData(max(data*0.83, 170.5));
-   */	
+   */  
   uint16_t data=255;
   GP8600.setDACOutData(data);
 #endif 

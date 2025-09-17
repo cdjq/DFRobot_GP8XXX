@@ -1,11 +1,11 @@
 /*!
   * @file DFRobot_GP8XXX.cpp
-  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302 driver method is implemented)
+  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210 driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
-  * @version  V1.0
-  * @date  2023-05-10
+  * @version V1.1.0
+  * @date 2025-07-04
   * @url https://github.com/DFRobot/DFRobot_GP8XXX
   */
  
@@ -76,7 +76,7 @@ void DFRobot_GP8XXX_IIC::sendData(uint16_t data, uint8_t channel)
 uint8_t DFRobot_GP8XXX_IIC::writeRegister(uint8_t reg, void* pBuf, size_t size)
 {
   if(pBuf == NULL){
-	  return 1;
+    return 1;
   }
   uint8_t * _pBuf = (uint8_t *)pBuf;
   _pWire->beginTransmission(_deviceAddr);
@@ -286,7 +286,7 @@ void DFRobot_GP8XXX_PWM::sendData(uint8_t data, uint8_t channel)
       analogWrite(_pin1, data);
     }else if( (channel == 2) && (_pin0 != -1) && (_pin1 != -1) ){
       analogWrite(_pin0, (uint8_t)data);
-	    analogWrite(_pin1, (uint8_t)data);
+      analogWrite(_pin1, (uint8_t)data);
     }
 }
 

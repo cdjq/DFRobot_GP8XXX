@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 '''!
-  @file  GP210outputData.py
+  @file  GP210output_data.py
   @brief Output the corresponding current signal through pulse width modulation signal.
   @copyright  Copyright (c) 2025 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)

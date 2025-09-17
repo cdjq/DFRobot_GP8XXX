@@ -70,15 +70,15 @@ void setup() {
    * @n    eOutputRange_12V(-12~0V)
    * @n    eOutputRange20MA(0~20MA)
    * @n    eOutputRange24MA(0~24MA)
-   */	
+   */  
   GP8630N.setDACOutRange(GP8630N.eOutputRange20MA);
    /**
-   * @brief Set the DAC output range.
-   * @param range DAC output range.
+   * @brief Set the DAC output data.
+   * @param data DAC output data.
    * @n In this module, with a 16-bit precision DAC, the data values ranging from 0 to 65535 correspond to ranges of 0~10V or -10~0V or 0~12V or ~12-0V or 0~20MA or 0~24MA, respectively.
    * @n If you want to output a 0-5V voltage signal , please multiply it by the proportion coefficient of 0.5.
    * @n For example: GP8630N.setDACOutRange(GP8630N.eOutputRange10V);    GP8630N.setDACOutData(65535*0.5);
-   */	
+   */  
   uint16_t data=65535;
   GP8630N.setDACOutData(data);
 #else
@@ -97,7 +97,7 @@ void setup() {
    * @n For example: GP8630N.setDACOutData(max(data*0.83, 42.5));
    * @n If you wish to output a 4 - 20 milliampere current signal and are using esp32 or esp8266, please use the following method:
    * @n For example: GP8630N.setDACOutData(max(data*0.83, 170.5));
-   */	
+   */  
    uint16_t data=400;
   GP8630N.setDACOutData(data);
 #endif 
