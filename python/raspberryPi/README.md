@@ -2,7 +2,7 @@
 
 * [中文版](./README_CN.md)
 
-GP8XXX series driver library on Raspberry Pi (currently compatible with GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512,GP8403,GP8302, GP8600, GP8630N, GP210)
+GP8XXX series driver library on Raspberry Pi (currently compatible with GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512,GP8403,GP8302, GP8600, GP8630N)
 
 ![Product Image](../../resources/images/DFR1035.png)
 
@@ -18,9 +18,8 @@ SKU：
 6. DFR1073 --- GP8413
 7. DFR0971 --- GP8403
 8. DFR0972 --- GP8302
-9. DFR1228 --- GP210  
-10. DFR1229 --- GP8600  
-11. DFR1230 --- GP8630N  
+9. DFR1229 --- GP8600  
+10. DFR1230 --- GP8630N  
 
 ## Table of Contents
 
@@ -122,7 +121,7 @@ There two methods:
       @n     OUTPUT_RANGE_10_0V(-10-0V)   GP8630N
       @n     OUTPUT_RANGE_12_0V(-12-0V)   GP8630N, GP8600
       @n     OUTPUT_RANGE_20MA(0-20mA)    
-      @n     OUTPUT_RANGE_24MA(0-24mA)    GP8630N, GP210
+      @n     OUTPUT_RANGE_24MA(0-24mA)    GP8630N
       @return NONE
     '''
 
@@ -157,7 +156,7 @@ There two methods:
 ## History
 
 - 2023/5/10 - Version 1.0.0 released.
-- 2025/9/3  - Version 1.1.0 released. add GP8600, GP8630N, GP210
+- 2025/9/3  - Version 1.1.0 released. add GP8600, GP8630N
 ## Credits
 
 - Written by fary( feng.yang@dfrobot.com), 2023. (Welcome to our [website](https://www.dfrobot.com/))

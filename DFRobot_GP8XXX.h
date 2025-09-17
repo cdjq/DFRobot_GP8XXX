@@ -1,6 +1,6 @@
 /*!
   * @file DFRobot_GP8XXX.h
-  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210 driver method is implemented)
+  * @brief GP8XXX series DAC driver library (GP8101, GP8101S, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N driver method is implemented)
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @license     The MIT License (MIT)
   * @author      [fary](feng.yang@dfrobot.com)
@@ -380,12 +380,7 @@ class DFRobot_GP8101S: public DFRobot_GP8XXX_PWM
   public:
     DFRobot_GP8101S(int pin0 = -1):DFRobot_GP8XXX_PWM(pin0){};
 };
-class DFRobot_GP210: public DFRobot_GP8XXX_PWM_SINGLE
-{
-  public:
-    DFRobot_GP210(int pin0 = -1):DFRobot_GP8XXX_PWM_SINGLE(pin0){};
-    void setDACOutElectricCurrent(uint16_t data){setDACOutData(data);};
-};
+
 class DFRobot_GP8600_PWM: public DFRobot_GP8XXX_PWM_SINGLE
 {
   public:

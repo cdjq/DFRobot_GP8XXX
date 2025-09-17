@@ -1,6 +1,6 @@
 '''!
   @file DFRobot_GP8XXX.py
-  @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N, GP210 driver method is implemented)
+  @brief GP8XXX series DAC driver library (GP8101, GP8211S, GP8413, GP8501, GP8503, GP8512, GP8403, GP8302, GP8600, GP8630N driver method is implemented)
   @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license     The MIT License (MIT)
   @author      [fary](feng.yang@dfrobot.com)
@@ -460,12 +460,6 @@ class DFRobot_GP8101(DFRobot_GP8XXX_PWM):
 class DFRobot_GP8101S(DFRobot_GP8XXX_PWM):
   def __init__(self,pin0=-1):
     return super().__init__(pin0,-1)
-
-class DFRobot_GP210(DFRobot_GP8XXX_PWM):
-  def __init__(self,pin0=-1):
-    return super().__init__(pin0,-1)
-  def set_dac_out_electric_current(self,data):
-    return self.set_dac_out_voltage(data)
 
 class DFRobot_GP8600_PWM(DFRobot_GP8XXX_PWM):
   def __init__(self,pin0=-1):
